@@ -210,7 +210,7 @@ class FirstRoom extends AdventureScene {
     onEnter(){
     //create(){
         this.add.image(320,210, 'FirstRoom').setOrigin(0.30,0.20).setScale(0.83);
-        //this.add.image(320,210, 'File').setScale(0.50);
+        this.add.image(750,710, 'File').setScale(0.20);
         //I am possibly defining the 'Rock' variable twice,maybe?
         //let Rock = 
         //this.add.image(320,210, 'Rock').setScale(0.50);
@@ -240,7 +240,7 @@ class FirstRoom extends AdventureScene {
 
 //currently set to collect rock, should I only move it off??
         //let Rock = this.add.text(this.w * 0.3, this.w * 0.3, "Rock")
-        let Rock = this.add.image(320,210, 'Rock').setScale(0.50);
+        let Rock = this.add.image(750,630, 'Rock').setScale(0.50);
         //.setFontSize(this.s * 2)
         Rock.setInteractive()
             .on('pointerover', () => this.showMessage("Stone, heavy."))
@@ -257,7 +257,7 @@ class FirstRoom extends AdventureScene {
     })
 ///????
         //let RightFire = 
-        let RightFire = this.add.image(320,210, 'Right Fire').setScale(0.50);
+        let RightFire = this.add.image(800,550, 'Right Fire').setScale(0.50);
         //this.text(this.w * 0.3, this.w * 0.3, "Right Fire")
             //.setFontSize(this.s * 2)
         RightFire.setInteractive()
@@ -272,7 +272,8 @@ class FirstRoom extends AdventureScene {
                     ease: 'Sine.inOut',
                     duration: 100
                 })});
-//check spacing for how let .. should be aligning compared to onEnter and other                
+//check spacing for how let .. should be aligning compared to onEnter and other 
+//this file does not connect with loaded image??               
         //let File = this.add.text(this.w * 0.5, this.w * 0.1, "File")
         let File = this.add.image(320,210, 'File').setScale(0.50);
         //.setFontSize(this.s * 2)
