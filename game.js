@@ -1,6 +1,83 @@
-class Demo1 extends AdventureScene {
+class Cover extends Phaser.Scene {
+    constructor(){
+        super("Cover");
+    }
+    preload(){
+        this.preload.path = './assets/';
+        this.preload.image('','');
+    }
+    create(){
+        //Top Secret, two fires, text
+        this.add.image
+        this.add.text
+        
+            this.add.text(50,50, "Adventure awaits!").setFontSize(50);
+            this.add.text(50,100, "Click anywhere to begin.").setFontSize(20);
+            this.input.on('pointerdown', () => {
+                this.cameras.main.fade(1000, 0,0,0);
+                this.time.delayedCall(1000, () => this.scene.start('demo1'));
+            });
+    }
+
+}
+
+
+
+class Intro extends Phaser.Scene {
+    constructor(){
+        super("Cover");
+    }
+    preload(){
+
+    }
+    create(){
+        //Top Secret, two fires, text
+        this.add.image
+        this.add.text
+    }
+
+}
+
+class Intro extends Phaser.Scene {
     constructor() {
-        super("demo1", "First Room");
+        super('Intro')
+    }
+    create() {
+        this.add.text(50,50, "Adventure awaits!").setFontSize(50);
+        this.add.text(50,100, "Click anywhere to begin.").setFontSize(20);
+        this.input.on('pointerdown', () => {
+            this.cameras.main.fade(1000, 0,0,0);
+            this.time.delayedCall(1000, () => this.scene.start('demo1'));
+        });
+    }
+}
+
+class Entrance extends Phaser.Scene {
+    constructor(){
+        super("Cover");
+    }
+    preload(){
+        
+    }
+    create(){
+        //Top Secret, two fires, text
+        this.add.image
+        this.add.text
+    }
+
+}
+
+class FirstRoom extends AdventureScene {
+    constructor() {
+        super("FirstRoom");
+    }
+    preload(){
+
+    }
+    create(){
+        //Top Secret, two fires, text
+        this.add.image
+        this.add.text
     }
 
     onEnter() {
@@ -61,9 +138,9 @@ class Demo1 extends AdventureScene {
     }
 }
 
-class Demo2 extends AdventureScene {
+class SecondRoom extends AdventureScene {
     constructor() {
-        super("demo2", "The second room has a long name (it truly does).");
+        super("Second Room");
     }
     onEnter() {
         this.add.text(this.w * 0.3, this.w * 0.4, "just go back")
@@ -92,28 +169,59 @@ class Demo2 extends AdventureScene {
     }
 }
 
-class Intro extends Phaser.Scene {
+class ThirdRoom extends AdventureScene {
     constructor() {
-        super('intro')
+        super("Third Room");
     }
-    create() {
-        this.add.text(50,50, "Adventure awaits!").setFontSize(50);
-        this.add.text(50,100, "Click anywhere to begin.").setFontSize(20);
-        this.input.on('pointerdown', () => {
-            this.cameras.main.fade(1000, 0,0,0);
-            this.time.delayedCall(1000, () => this.scene.start('demo1'));
-        });
+    preload(){
+
+    }
+    create(){
+        this.add.image
+        this.add.text
+    }
+
+    onEnter() {
+
     }
 }
 
-class Outro extends Phaser.Scene {
+class FourthRoom extends AdventureScene {
     constructor() {
-        super('outro');
+        super("Fourth Room");
+    }
+    preload(){
+
+    }
+    create(){
+        this.add.image
+        this.add.text
+    }
+
+    onEnter() {
+
+    }
+}
+
+class Freedom extends Phaser.Scene {
+    constructor() {
+        super('Freedom');
     }
     create() {
         this.add.text(50, 50, "That's all!").setFontSize(50);
         this.add.text(50, 100, "Click anywhere to restart.").setFontSize(20);
-        this.input.on('pointerdown', () => this.scene.start('intro'));
+        this.input.on('pointerdown', () => this.scene.start('Cover'));
+    }
+}
+
+class Capture extends Phaser.Scene {
+    constructor() {
+        super('Capture');
+    }
+    create() {
+        this.add.text(50, 50, "That's all!").setFontSize(50);
+        this.add.text(50, 100, "Click anywhere to restart.").setFontSize(20);
+        this.input.on('pointerdown', () => this.scene.start('Cover'));
     }
 }
 
@@ -125,7 +233,7 @@ const game = new Phaser.Game({
         width: 1920,
         height: 1080
     },
-    scene: [Intro, Demo1, Demo2, Outro],
+    scene: [Cover, Intro, FirstRoom, SecondRoom, ThirdRoom, FourthRoom, Freedom, Capture],
     title: "Adventure Game",
 });
 
