@@ -28,13 +28,52 @@ class Intro extends Phaser.Scene {
         super("Intro")
     }
     create() {
-        this.add.text(20,20, "The world is in danger once more. . .").setFontSize(50);
-        this.add.text(30,30, "Your Mission:").setFontSize(50);
-        this.add.text(40,40, "You must retrieve the stolen files, while evading capture").setFontSize(50);
-        this.add.text(50,50, "Best of Luck").setFontSize(50);
-        this.add.text(60,100, "Click anywhere to continue.").setFontSize(20);
-
+        let texta = this.add.text(20,20, "The world is in danger once more. . .").setFontSize(50);
+        let textb = this.add.text(30,30, "Your Mission:").setFontSize(50);
+        let textc = this.add.text(40,40, "You must retrieve the stolen files, while evading capture").setFontSize(50);
+        let textd = this.add.text(50,50, "Best of Luck").setFontSize(50);
+        let texte = this.add.text(60,100, "Click anywhere to continue.").setFontSize(20);
 //add animation so that text comes in one after the other
+        this.tweens.add({
+            targets: texta,
+            duration: 1000,
+            alpha: 1,
+            ease: 'Linear',
+            delay: 100,
+            });
+
+        this.tweens.add({
+            targets: textb,
+            duration: 1000,
+            alpha: 1,
+            ease: 'Linear',
+            delay: 300
+        });
+
+        this.tweens.add({
+            targets: textc,
+            duration: 1000,
+            alpha: 1,
+            ease: 'Linear',
+            delay: 500
+        });
+
+        this.tweens.add({
+            targets: textd,
+            duration: 1000,
+            alpha: 1,
+            ease: 'Linear',
+            delay: 700
+        });
+
+        this.tweens.add({
+            targets: texte,
+            duration: 1000,
+            alpha: 1,
+            ease: 'Linear',
+            delay: 900
+        });
+
         this.input.on('pointerdown', () => {
             this.cameras.main.fade(1000, 0,0,0);
             this.time.delayedCall(1000, () => this.scene.start("Entrance"));
