@@ -4,57 +4,46 @@ class Cover extends Phaser.Scene {
     }
     preload(){
         this.preload.path = './assets/';
-        this.preload.image('','');
+        this.preload.image('Top Secret','Top Secret.png');
+        this.preload.image('Left Fire','Left Fire.png');
+        this.preload.image('Right Fire','Right Fire.png');
+
     }
     create(){
         //Top Secret, two fires, text
-        this.add.image
-        this.add.text
-        
-            this.add.text(50,50, "Adventure awaits!").setFontSize(50);
-            this.add.text(50,100, "Click anywhere to begin.").setFontSize(20);
-            this.input.on('pointerdown', () => {
-                this.cameras.main.fade(1000, 0,0,0);
-                this.time.delayedCall(1000, () => this.scene.start('demo1'));
+        this.add.image(320,210, 'Top Secret').setScale(0.50);
+        this.add.image(220,100, 'Left Fire').setScale(0.50);
+        this.add.image(220,400, 'Right Fire').setScale(0.50);
+        this.add.text(420,210, "The World Needs You!").setFontSize(50);
+        this.add.text(50,100, "Click anywhere to begin.").setFontSize(20);
+        this.input.on('pointerdown', () => {
+            this.cameras.main.fade(1000, 0,0,0);
+            this.time.delayedCall(1000, () => this.scene.start("Intro"));
             });
-    }
-
-}
-
-
-
-class Intro extends Phaser.Scene {
-    constructor(){
-        super("Cover");
-    }
-    preload(){
-
-    }
-    create(){
-        //Top Secret, two fires, text
-        this.add.image
-        this.add.text
     }
 
 }
 
 class Intro extends Phaser.Scene {
     constructor() {
-        super('Intro')
+        super("Intro")
     }
     create() {
-        this.add.text(50,50, "Adventure awaits!").setFontSize(50);
-        this.add.text(50,100, "Click anywhere to begin.").setFontSize(20);
+        this.add.text(20,20, "The world is in danger once more. . .").setFontSize(50);
+        this.add.text(30,30, "Your Mission:").setFontSize(50);
+        this.add.text(40,40, "You must retrieve the stolen files, while evading capture").setFontSize(50);
+        this.add.text(50,50, "Best of Luck").setFontSize(50);
+        this.add.text(60,100, "Click anywhere to continue.").setFontSize(20);
         this.input.on('pointerdown', () => {
             this.cameras.main.fade(1000, 0,0,0);
-            this.time.delayedCall(1000, () => this.scene.start('demo1'));
+            this.time.delayedCall(1000, () => this.scene.start("Entrance"));
         });
     }
 }
 
 class Entrance extends Phaser.Scene {
     constructor(){
-        super("Cover");
+        super("Entrance");
     }
     preload(){
         
@@ -69,7 +58,7 @@ class Entrance extends Phaser.Scene {
 
 class FirstRoom extends AdventureScene {
     constructor() {
-        super("FirstRoom");
+        super("First Room");
     }
     preload(){
 
@@ -233,7 +222,7 @@ const game = new Phaser.Game({
         width: 1920,
         height: 1080
     },
-    scene: [Cover, Intro, FirstRoom, SecondRoom, ThirdRoom, FourthRoom, Freedom, Capture],
+    scene: [Cover], //Intro, FirstRoom, SecondRoom, ThirdRoom, FourthRoom, Freedom, Capture],
     title: "Adventure Game",
 });
 
