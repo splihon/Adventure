@@ -99,7 +99,8 @@ class Entrance extends AdventureScene {
         this.load.image('Rock', 'Rock.png');
         this.load.image('Flower', 'Flower.png');
     }
-    create(){
+    onEnter(){
+    //create(){
         let Entrance = this.add.image(320,210, 'Entrance').setOrigin(0,0).setScale(0.50);
         let Flowera = this.add.image(400,203, 'Flower').setScale(0.50);
         let Flowerb = this.add.image(400,206, 'Flower').setScale(0.50);
@@ -120,9 +121,9 @@ class Entrance extends AdventureScene {
             this.cameras.main.fade(1000, 0,0,0);
             this.time.delayedCall(1000, () => this.scene.start("First Room"));
         });
-    }
+   // }
 //Q: thought maybe images are not showing up with it as this.add.text so changed to image but still not loading??
-    onEnter(){
+    //onEnter(){
         this.add.image(this.w * 0.6, this.w * 0.8, "Enter Cave")
             .setFontSize(this.s * 2)
         //let Entrance = this.add.image(320,210, 'Entrance')//.setOrigin(0,0);
@@ -177,14 +178,16 @@ class FirstRoom extends AdventureScene {
         this.load.image('FirstRoom','FirstRoom.png');
         this.load.image('File','File.png');
     }
-    create(){
+    onEnter(){
+    //create(){
         this.add.image(320,210, 'FirstRoom').setScale(0.50);
         this.add.image(320,210, 'File').setScale(0.50);
         //I am possibly defining the 'Rock' variable twice,maybe?
         //let Rock = this.add.image(320,210, 'Rock').setScale(0.50);
-        let RightFire = this.add.image(320,210, 'Right Fire').setScale(0.50);
-    }
-    onEnter() {
+        //let RightFire = 
+        this.add.image(320,210, 'Right Fire').setScale(0.50);
+    //}
+    //onEnter() {
         this.add.text(this.w * 0.6, this.w * 0.8, "Turn Left")
             .setFontSize(this.s * 2)
             .setInteractive()
@@ -219,10 +222,11 @@ class FirstRoom extends AdventureScene {
                     alpha: { from: 1, to: 0 },
                     duration: 500,
                    onComplete: () => Rock.destroy()
-                }
-                )});
-
-        let RightFire = this.text(this.w * 0.3, this.w * 0.3, "Right Fire")
+                })
+    })
+///????
+        //let RightFire = 
+        this.text(this.w * 0.3, this.w * 0.3, "Right Fire")
             .setFontSize(this.s * 2)
             .setInteractive()
             .on('pointerover', ("Torch, Embeded in the wall."))
@@ -268,12 +272,13 @@ class SecondRoom extends AdventureScene {
         this.load.image('SecondRoom','SecondRoom.png');
         this.load.image('Key','Key.png');
     }
-    create(){
+    onEnter() {
+    //create(){
         this.add.image(320,210, 'SecondRoom').setScale(0.50);
         this.add.image(320,210, 'Left Fire').setScale(0.50);
         let Key = this.add.image(320,210, 'Key').setScale(0.50);
-    }
-    onEnter() {
+    //}
+    //onEnter() {
        this.add.text(this.w * 0.3, this.w * 0.4, "Go back")
           .setFontSize(this.s * 2)
             .setInteractive()
@@ -370,7 +375,8 @@ class ThirdRoom extends AdventureScene {
         this.load.image('Door','Door.png');
         this.load.image('Mouse','Mouse.png');
     }
-    create(){
+    onEnter() {
+    //create(){
         this.add.image(320,210, 'SecondRoom').setScale(0.50);
         this.add.image(320,210, 'Left Fire').setScale(0.50);
         this.add.image(320,210, 'Right Fire').setScale(0.50);
@@ -378,9 +384,9 @@ class ThirdRoom extends AdventureScene {
         this.add.image(320,210, 'Flower').setScale(0.50);
         let Mouse = this.add.image(320,210, 'Mouse').setScale(0.50);
         let door = this.add.image(320,210, 'Door').setScale(0.50);
-    }
+    //}
 
-    onEnter() {
+    //onEnter() {
         let RightFire = this.text(this.w * 0.3, this.w * 0.3, "Right Fire")
             .setFontSize(this.s * 2)
             .setInteractive()
