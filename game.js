@@ -16,9 +16,24 @@ class Cover extends Phaser.Scene {
         let LeftFire = this.add.image(120,700, 'Left Fire').setScale(0.50);
         let RightFire = this.add.image(1200,600, 'Right Fire').setScale(0.50);
       //add tween delays for text  
-        this.add.text(700,600, "The World Needs You!").setFontSize(50);
-        this.add.text(700,700, "Click anywhere to begin.").setFontSize(40);
+        let texta = this.add.text(570,600, "The World Needs You!").setFontSize(70).setAlpha(0);
+        let textb = this.add.text(700,900, "Click anywhere to begin.").setFontSize(40).setAlpha(0);
         
+        this.tweens.add({
+            targets: texta,
+            duration: 1000,
+            alpha: 1,
+            ease: 'Linear',
+            delay: 900,
+            });
+
+        this.tweens.add({
+            targets: textb,
+            duration: 1000,
+            alpha: 1,
+            ease: 'Linear',
+            delay: 2000,
+            });
         topsecret.depth = 1;
         LeftFire.depth = 2;
         RightFire.depth = 2;
@@ -30,18 +45,18 @@ class Cover extends Phaser.Scene {
     }
 
 }
-//Q: why does the text no fade in over time, or it does but since cover does not work it does not start??
+
 class Intro extends Phaser.Scene {
     constructor() {
         super("Intro")
     }
     create() {
-        let texta = this.add.text(70,90, "The world is in danger once more. . .").setFontSize(50);
-        let textb = this.add.text(150,300, "Your Mission:").setFontSize(70);
-        let textc = this.add.text(40,430, "You must retrieve the stolen files, while evading capture.").setFontSize(50);
-        let textd = this.add.text(300,580, "Best of Luck.").setFontSize(50);
-        let texte = this.add.text(500,900, "Click anywhere to continue.").setFontSize(40);
-//delay is not working??
+        let texta = this.add.text(70,90, "The world is in danger once more. . .").setFontSize(50).setAlpha(0);
+        let textb = this.add.text(150,300, "Your Mission:").setFontSize(70).setAlpha(0);
+        let textc = this.add.text(40,430, "You must retrieve the stolen files, while evading capture.").setFontSize(50).setAlpha(0);
+        let textd = this.add.text(300,580, "Best of Luck.").setFontSize(50).setAlpha(0);
+        let texte = this.add.text(700,900, "Click anywhere to continue.").setFontSize(40).setAlpha(0);
+
         this.tweens.add({
             targets: texta,
             duration: 1000,
@@ -55,7 +70,7 @@ class Intro extends Phaser.Scene {
             duration: 1000,
             alpha: 1,
             ease: 'Linear',
-            delay: 1100
+            delay: 1600
         });
 
         this.tweens.add({
@@ -63,7 +78,7 @@ class Intro extends Phaser.Scene {
             duration: 1000,
             alpha: 1,
             ease: 'Linear',
-            delay: 1200
+            delay: 2000
         });
 
         this.tweens.add({
@@ -71,7 +86,7 @@ class Intro extends Phaser.Scene {
             duration: 1000,
             alpha: 1,
             ease: 'Linear',
-            delay: 1300
+            delay: 3600
         });
 
         this.tweens.add({
@@ -79,7 +94,7 @@ class Intro extends Phaser.Scene {
             duration: 1000,
             alpha: 1,
             ease: 'Linear',
-            delay: 1400
+            delay: 4600
         });
 
         this.input.on('pointerdown', () => {
@@ -101,20 +116,21 @@ class Entrance extends AdventureScene {
     }
     onEnter(){
     //create(){
-        let Entrance = this.add.image(320,210, 'Entrance').setOrigin(0,0).setScale(0.50);
+        let Entrance = this.add.image(320,210, 'Entrance').setOrigin(0,0).setScale(0.60);
         let Flowera = this.add.image(400,203, 'Flower').setScale(0.50);
-        let Flowerb = this.add.image(400,206, 'Flower').setScale(0.50);
-        let Flowerc = this.add.image(400,209, 'Flower').setScale(0.50);
+        let Flowerb = this.add.image(500,213, 'Flower').setScale(0.50);
+        let Flowerc = this.add.image(600,229, 'Flower').setScale(0.50);
         let Rocka = this.add.image(200,200, 'Rock').setScale(0.50);
-        let Rockb = this.add.image(400,300, 'Rock').setScale(0.50);
+        let Rockb = this.add.image(200,300, 'Rock').setScale(0.50);
 //not working to show images??
         Entrance.depth = 1;
         Flowera.depth = 2;
         Flowerb.depth = 2;
         Flowerc.depth = 2;
         Rocka.depth = 2;
-        Rocka.depth = 2;
-
+        Rockb.depth = 2;
+        //inventory.depth = 3;
+//Need to fix so that can collect item while not switching to next scene
 //Q: does this need to go after onEnter, or maybe put onEnter above create?? 
 //F: if starts to work check on how long the delay is,and if it is sufficent time   
         this.input.on('pointerdown', () => {
@@ -545,8 +561,8 @@ const game = new Phaser.Game({
         width: 1920,
         height: 1080
     },
-    //scene: [Cover],
-    scene: [Cover, Intro, Entrance, FirstRoom, SecondRoom, ThirdRoom, Freedom, Capture],
+    scene: [Cover, Intro],
+    //scene: [Cover, Intro, Entrance, FirstRoom, SecondRoom, ThirdRoom, Freedom, Capture],
     title: "Adventure Game",
 });
 
