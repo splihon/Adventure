@@ -3,11 +3,11 @@ class Cover extends Phaser.Scene {
         super("Cover");
     }
     preload(){
-        this.preload.path = './assets/';
-        this.preload.image('Top Secret','Top Secret.png');
-        this.preload.image('Left Fire','Left Fire.png');
-        this.preload.image('Right Fire','Right Fire.png');
-
+        this.load.path = './assets/';
+        this.load.image('Top Secret','Top Secret.png');
+        this.load.image('Left Fire','Left Fire.png');
+        this.load.image('Right Fire','Right Fire.png');
+    
     }
     create(){
         this.add.image(320,210, 'Top Secret').setScale(0.50);
@@ -42,14 +42,14 @@ class Intro extends Phaser.Scene {
     }
 }
 
-class Entrance extends Adventure.Scene {
+class Entrance extends AdventureScene {
     constructor(){
         super("Entrance");
     }
     preload(){
-        this.preload.image('Entrance','Entrance.png');
-        this.preload.image('Rock', 'Rock.png');
-        this.preload.image('Flower', 'Flower.png');
+        this.load.image('Entrance','Entrance.png');
+        this.load.image('Rock', 'Rock.png');
+        this.load.image('Flower', 'Flower.png');
     }
     create(){
         this.add.image(320,210, 'Entrance').setScale(0.50);
@@ -66,7 +66,7 @@ class Entrance extends Adventure.Scene {
             this.cameras.main.fade(1000, 0,0,0);
             this.time.delayedCall(1000, () => this.scene.start("First Room"));
         });
-//Am i having an ';' error because there is a create(){} section in the adventrue/onEnter section??
+    }
     onEnter(){
         this.add.text(this.w * 0.6, this.w * 0.8, "Enter Cave")
         .setFontSize(this.s * 2)
@@ -76,26 +76,24 @@ class Entrance extends Adventure.Scene {
           })
           .on('pointerdown', () => {
               this.gotoScene('First Room');
-          })
-        };
+          });
+        }
     }
-
-}
 
 class FirstRoom extends AdventureScene {
     constructor() {
         super("First Room");
     }
     preload(){
-        this.preload.image('FirstRoom','FirstRoom.png');
-        this.preload.image('File','File.png');
+        this.load.image('FirstRoom','FirstRoom.png');
+        this.load.image('File','File.png');
     }
     create(){
         this.add.image(320,210, 'FirstRoom').setScale(0.50);
         let File = this.add.image(320,210, 'File').setScale(0.50);
-        let Rock = this.add.image(320,210, 'Rock').setScale(0.50);
+        //I am possibly defining the 'Rock' variable twice,maybe?
+        //let Rock = this.add.image(320,210, 'Rock').setScale(0.50);
         let RightFire = this.add.image(320,210, 'Right Fire').setScale(0.50);
-        //this.add.text
     }
     onEnter() {
         this.add.text(this.w * 0.6, this.w * 0.8, "Turn Left")
@@ -177,8 +175,8 @@ class SecondRoom extends AdventureScene {
         super("Second Room");
     }
     preload(){
-        this.preload.image('SecondRoom','SecondRoom.png');
-        this.preload.image('Key','Key.png');
+        this.load.image('SecondRoom','SecondRoom.png');
+        this.load.image('Key','Key.png');
     }
     create(){
         this.add.image(320,210, 'SecondRoom').setScale(0.50);
@@ -263,9 +261,9 @@ class ThirdRoom extends AdventureScene {
         super("Third Room");
     }
     preload(){
-        this.preload.image('ThirdRoom','ThirdRoom.png');
-        this.preload.image('Door','Door.png');
-        this.preload.image('Mouse','Mouse.png');
+        this.load.image('ThirdRoom','ThirdRoom.png');
+        this.load.image('Door','Door.png');
+        this.load.image('Mouse','Mouse.png');
     }
     create(){
         this.add.image(320,210, 'SecondRoom').setScale(0.50);
@@ -288,7 +286,7 @@ class Freedom extends Phaser.Scene {
         super('Freedom');
     }
     preload(){
-        this.preload.image('Freedom','Freedom.png');
+        this.load.image('Freedom','Freedom.png');
     }
     create() {
         this.add.image(320,210, 'Freedom').setScale(0.50);
@@ -305,7 +303,7 @@ class Capture extends Phaser.Scene {
         super('Capture');
     }
     preload(){
-        this.preload.image('Mission Failed','Mission Failed.png');
+        this.load.image('Mission Failed','Mission Failed.png');
     }
     create() {
         this.add.image(320,210, 'Mission Failed').setScale(0.50);
