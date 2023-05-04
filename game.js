@@ -33,6 +33,8 @@ class Intro extends Phaser.Scene {
         this.add.text(40,40, "You must retrieve the stolen files, while evading capture").setFontSize(50);
         this.add.text(50,50, "Best of Luck").setFontSize(50);
         this.add.text(60,100, "Click anywhere to continue.").setFontSize(20);
+
+//add animation so that text comes in one after the other
         this.input.on('pointerdown', () => {
             this.cameras.main.fade(1000, 0,0,0);
             this.time.delayedCall(1000, () => this.scene.start("Entrance"));
@@ -60,6 +62,22 @@ class Entrance extends Adventure.Scene {
         //animation
         //sub classes are onEnter???
         //arrown or text to move between rooms??
+        this.input.on('pointerdown', () => {
+            this.cameras.main.fade(1000, 0,0,0);
+            this.time.delayedCall(1000, () => this.scene.start("First Room"));
+        });
+//Am i having an ';' error because there is a create(){} section in the adventrue/onEnter section??
+    onEnter(){
+        this.add.text(this.w * 0.6, this.w * 0.8, "Enter Cave")
+        .setFontSize(this.s * 2)
+          .setInteractive()
+          .on('pointerover', () => {
+              this.showMessage("This must be where I can find the documents.");
+          })
+          .on('pointerdown', () => {
+              this.gotoScene('First Room');
+          })
+        };
     }
 
 }
@@ -74,46 +92,137 @@ class FirstRoom extends AdventureScene {
     }
     create(){
         this.add.image(320,210, 'FirstRoom').setScale(0.50);
-        this.add.image(320,210, 'File').setScale(0.50);
-        this.add.image(320,210, 'Rock').setScale(0.50);
-        this.add.image(320,210, 'Right Fire').setScale(0.50);
+        let File = this.add.image(320,210, 'File').setScale(0.50);
+        let Rock = this.add.image(320,210, 'Rock').setScale(0.50);
+        let RightFire = this.add.image(320,210, 'Right Fire').setScale(0.50);
         //this.add.text
     }
-   // onEnter() {
+    onEnter() {
+        this.add.text(this.w * 0.6, this.w * 0.8, "Turn Left")
+        .setFontSize(this.s * 2)
+          .setInteractive()
+          .on('pointerover', () => {
+              this.showMessage("Where does this lead?");
+          })
+          .on('pointerdown', () => {
+              this.gotoScene('Second Room');
+          });
 
-    //    let clip = this.add.text(this.w * 0.3, this.w * 0.3, "📎 paperclip")
-    //        .setFontSize(this.s * 2)
-    //        .setInteractive()
-    //        .on('pointerover', () => this.showMessage("Metal, bent."))
-    //        .on('pointerdown', () => {
-    //            this.showMessage("No touching!");
-    //            this.tweens.add({
-    //                targets: clip,
-    //                x: '+=' + this.s,
-    //                repeat: 2,
-    //               yoyo: true,
-    //                ease: 'Sine.inOut',
-    //                duration: 100
-    //            });
-    //        });
+        this.add.text(this.w * 0.6, this.w * 0.8, "Go Straight")
+        .setFontSize(this.s * 2)
+          .setInteractive()
+          .on('pointerover', () => {
+              this.showMessage("Where does this lead?");
+          })
+          .on('pointerdown', () => {
+              this.gotoScene('Third Room');
+          });
 
-    //    let key = this.add.text(this.w * 0.5, this.w * 0.1, "🔑 key")
-    //        .setFontSize(this.s * 2)
-    //        .setInteractive()
-    //        .on('pointerover', () => {
-    //         this.showMessage("It's a nice key.")
-    //        })
-    //        .on('pointerdown', () => {
-    //            this.showMessage("You pick up the key.");
-    //            this.gainItem('key');
-    //            this.tweens.add({
-    //                targets: key,
-    //                y: `-=${2 * this.s}`,
-    //                alpha: { from: 1, to: 0 },
-    //                duration: 500,
-    //               onComplete: () => key.destroy()
-    //            });
-    //        })
+//currently set to collect rock, should I only move it off??
+           let Rock = this.add.text(this.w * 0.3, this.w * 0.3, "Rock")
+            .setFontSize(this.s * 2)
+            .setInteractive()
+            .on('pointerover', () => this.showMessage("Stone, heavy."))
+             .on('pointerdown', () => {
+                this.showMessage("You picked up a Rock.");//you moved a Rock
+                this.gainItem('Key');
+                this.tweens.add({
+                    targets: Rock,
+                    y: `-=${2 * this.s}`,
+                    alpha: { from: 1, to: 0 },
+                    duration: 500,
+                   onComplete: () => Rock.destroy()
+                }
+                )});
+
+                let RightFire = this.text(this.w * 0.3, this.w * 0.3, "Torch")
+                .setFontSize(this.s * 2)
+                .setInteractive()
+                .on('pointerover', ("Torch, Embeded in the wall."))
+                   .on('pointerdown', () => {
+                this.showMessage("Hot! No touching!");
+                this.tweens.add({
+                    targets: clip,
+                    x: '+=' + this.s,
+                    repeat: 2,
+                   yoyo: true,
+                    ease: 'Sine.inOut',
+                    duration: 100
+                })});
+//check spacing for how let .. should be aligning compared to onEnter and other                
+            let File = this.add.text(this.w * 0.5, this.w * 0.1, "File")
+            .setFontSize(this.s * 2)
+            .setInteractive()
+            .on('pointerover', () => {
+            this.showMessage("Found it!")
+          })
+           .on('pointerdown', () => {
+               this.showMessage("You picked up confidencial documents.");
+               this.gainItem('File');
+               this.tweens.add({
+                   targets: File,
+                   y: `-=${2 * this.s}`,
+                   alpha: { from: 1, to: 0 },
+                   duration: 500,
+//idea on what one of the things i change or add to other page is .move for rocks or .shake for flower bundles?(if even am understanding that part correctly )
+                  onComplete: () => File.destroy()
+               }
+               )});
+           }
+
+}
+
+class SecondRoom extends AdventureScene {
+    constructor() {
+        super("Second Room");
+    }
+    preload(){
+        this.preload.image('SecondRoom','SecondRoom.png');
+        this.preload.image('Key','Key.png');
+    }
+    create(){
+        this.add.image(320,210, 'SecondRoom').setScale(0.50);
+        this.add.image(320,210, 'Left Fire').setScale(0.50);
+        let Key = this.add.image(320,210, 'Key').setScale(0.50);
+    }
+    onEnter() {
+       this.add.text(this.w * 0.3, this.w * 0.4, "Go back")
+          .setFontSize(this.s * 2)
+            .setInteractive()
+      //      .on('pointerover', () => {
+      //          this.showMessage("You've got no other choice, really.");
+     //       })
+            .on('pointerdown', () => {
+                this.gotoScene('First Room');
+            });
+
+        this.add.text(this.w * 0.6, this.w * 0.8, "Turn Right")
+            .setFontSize(this.s * 2)
+              .setInteractive()
+        //      .on('pointerover', () => {
+        //          this.showMessage("You've got no other choice, really.");
+       //       })
+              .on('pointerdown', () => {
+                  this.gotoScene('Third Room');
+              });
+
+            let Key = this.add.text(this.w * 0.5, this.w * 0.1, "🔑 key")
+            .setFontSize(this.s * 2)
+            .setInteractive()
+            .on('pointerover', () => {
+             this.showMessage("Seems important. . .")
+           })
+            .on('pointerdown', () => {
+                this.showMessage("You picked up the key.");
+                this.gainItem('Key');
+                this.tweens.add({
+                    targets: Key,
+                    y: `-=${2 * this.s}`,
+                    alpha: { from: 1, to: 0 },
+                    duration: 500,
+                   onComplete: () => Key.destroy()
+                });
+            })
 
     //    let door = this.add.text(this.w * 0.1, this.w * 0.15, "🚪 locked door")
     //        .setFontSize(this.s * 2)
@@ -132,34 +241,6 @@ class FirstRoom extends AdventureScene {
      //               door.setText("🚪 unlocked door");
        //             this.gotoScene('demo2');
          //       }
-           // })
-
- //   }
-}
-
-class SecondRoom extends AdventureScene {
-    constructor() {
-        super("Second Room");
-    }
-    preload(){
-        this.preload.image('SecondRoom','SecondRoom.png');
-        this.preload.image('Key','Key.png');
-    }
-    create(){
-        this.add.image(320,210, 'SecondRoom').setScale(0.50);
-        this.add.image(320,210, 'Left Fire').setScale(0.50);
-        this.add.image(320,210, 'Key').setScale(0.50);
-    }
-    //onEnter() {
-     //   this.add.text(this.w * 0.3, this.w * 0.4, "just go back")
-     //       .setFontSize(this.s * 2)
-     //       .setInteractive()
-     //       .on('pointerover', () => {
-     //           this.showMessage("You've got no other choice, really.");
-     //       })
-     //       .on('pointerdown', () => {
-     //           this.gotoScene('demo1');
-     //       });
 
      //   let finish = this.add.text(this.w * 0.6, this.w * 0.2, '(finish the game)')
      //       .setInteractive()
@@ -174,7 +255,7 @@ class SecondRoom extends AdventureScene {
          //       });
        //     })
        //     .on('pointerdown', () => this.gotoScene('outro'));
-   // }
+    }
 }
 
 class ThirdRoom extends AdventureScene {
