@@ -1,3 +1,5 @@
+//Q; why are my images not loading??
+//Q: why is the inventory not showing up??
 class Cover extends Phaser.Scene {
     constructor(){
         super("Cover");
@@ -22,24 +24,24 @@ class Cover extends Phaser.Scene {
     }
 
 }
-
+//Q: why does the text no fade in over time, or it does but since cover does not work it does not start??
 class Intro extends Phaser.Scene {
     constructor() {
         super("Intro")
     }
     create() {
-        let texta = this.add.text(20,20, "The world is in danger once more. . .").setFontSize(50);
-        let textb = this.add.text(30,30, "Your Mission:").setFontSize(50);
-        let textc = this.add.text(40,40, "You must retrieve the stolen files, while evading capture").setFontSize(50);
-        let textd = this.add.text(50,50, "Best of Luck").setFontSize(50);
-        let texte = this.add.text(60,100, "Click anywhere to continue.").setFontSize(20);
-//add animation so that text comes in one after the other
+        let texta = this.add.text(70,90, "The world is in danger once more. . .").setFontSize(50);
+        let textb = this.add.text(150,300, "Your Mission:").setFontSize(70);
+        let textc = this.add.text(40,430, "You must retrieve the stolen files, while evading capture.").setFontSize(50);
+        let textd = this.add.text(300,580, "Best of Luck.").setFontSize(50);
+        let texte = this.add.text(500,900, "Click anywhere to continue.").setFontSize(40);
+
         this.tweens.add({
             targets: texta,
             duration: 1000,
             alpha: 1,
             ease: 'Linear',
-            delay: 100,
+            delay: 1000,
             });
 
         this.tweens.add({
@@ -47,7 +49,7 @@ class Intro extends Phaser.Scene {
             duration: 1000,
             alpha: 1,
             ease: 'Linear',
-            delay: 300
+            delay: 1100
         });
 
         this.tweens.add({
@@ -55,7 +57,7 @@ class Intro extends Phaser.Scene {
             duration: 1000,
             alpha: 1,
             ease: 'Linear',
-            delay: 500
+            delay: 1200
         });
 
         this.tweens.add({
@@ -63,7 +65,7 @@ class Intro extends Phaser.Scene {
             duration: 1000,
             alpha: 1,
             ease: 'Linear',
-            delay: 700
+            delay: 1300
         });
 
         this.tweens.add({
@@ -71,7 +73,7 @@ class Intro extends Phaser.Scene {
             duration: 1000,
             alpha: 1,
             ease: 'Linear',
-            delay: 900
+            delay: 1400
         });
 
         this.input.on('pointerdown', () => {
@@ -91,33 +93,65 @@ class Entrance extends AdventureScene {
         this.load.image('Flower', 'Flower.png');
     }
     create(){
-        this.add.image(320,210, 'Entrance').setScale(0.50);
+        this.add.image(320,210, 'Entrance').setOrigin(0,0);
         this.add.image(400,203, 'Flower').setScale(0.50);
         this.add.image(400,206, 'Flower').setScale(0.50);
         this.add.image(400,209, 'Flower').setScale(0.50);
         this.add.image(200,200, 'Rock').setScale(0.50);
         this.add.image(400,300, 'Rock').setScale(0.50);
-        // point over + point down: . . .this.add.text
-        //animation
-        //sub classes are onEnter???
-        //arrown or text to move between rooms??
+//Q: does this need to go after onEnter, or maybe put onEnter above create?? 
+//F: if starts to work check on how long the delay is,and if it is sufficent time   
         this.input.on('pointerdown', () => {
             this.cameras.main.fade(1000, 0,0,0);
             this.time.delayedCall(1000, () => this.scene.start("First Room"));
         });
     }
+//Q: thought maybe images are not showing up with it as this.add.text so changed to image but still not loading??
     onEnter(){
-        this.add.text(this.w * 0.6, this.w * 0.8, "Enter Cave")
-        .setFontSize(this.s * 2)
-          .setInteractive()
-          .on('pointerover', () => {
-              this.showMessage("This must be where I can find the documents.");
-          })
-          .on('pointerdown', () => {
-              this.gotoScene('First Room');
-          });
-        }
+        this.add.image(this.w * 0.6, this.w * 0.8, "Enter Cave")
+            .setFontSize(this.s * 2)
+        //let Entrance = this.add.image(320,210, 'Entrance')//.setOrigin(0,0);
+        //still not working??
+            .setInteractive()
+            .on('pointerover', () => {
+                this.showMessage("This must be where I can find the documents.");
+            })
+            .on('pointerdown', () => {
+                this.gotoScene('First Room');
+            });
+        let Rock = this.add.image(this.w * 0.3, this.w * 0.3, "Rock")
+            .setFontSize(this.s * 2)
+            .setInteractive()
+//possibly change so the rock moves and does not collect as on of the additions
+            .on('pointerover', () => this.showMessage("Stone, heavy."))
+            .on('pointerdown', () => {
+                this.showMessage("You picked up a rock.");
+                this.gainItem('Rock');
+                this.tweens.add({
+                    targets: Rock,
+                    y: `-=${2 * this.s}`,
+                    alpha: { from: 1, to: 0 },
+                    duration: 500,
+                   onComplete: () => Rock.destroy()
+                }
+                )});
+        let Flower = this.add.image(this.w * 0.3, this.w * 0.3, "Flower")
+                .setFontSize(this.s * 2)
+                .setInteractive()
+                .on('pointerover', () => this.showMessage("Flower, smells nice."))
+                .on('pointerdown', () => {
+                    this.showMessage("You picked up a flower.");
+                    this.gainItem('Flower');
+                    this.tweens.add({
+                        targets: Flower,
+                        y: `-=${2 * this.s}`,
+                        alpha: { from: 1, to: 0 },
+                        duration: 500,
+                       onComplete: () => Flower.destroy()
+                    })
+                })
     }
+}
 
 class FirstRoom extends AdventureScene {
     constructor() {
@@ -129,40 +163,40 @@ class FirstRoom extends AdventureScene {
     }
     create(){
         this.add.image(320,210, 'FirstRoom').setScale(0.50);
-        let File = this.add.image(320,210, 'File').setScale(0.50);
+        this.add.image(320,210, 'File').setScale(0.50);
         //I am possibly defining the 'Rock' variable twice,maybe?
         //let Rock = this.add.image(320,210, 'Rock').setScale(0.50);
         let RightFire = this.add.image(320,210, 'Right Fire').setScale(0.50);
     }
     onEnter() {
         this.add.text(this.w * 0.6, this.w * 0.8, "Turn Left")
-        .setFontSize(this.s * 2)
-          .setInteractive()
-          .on('pointerover', () => {
-              this.showMessage("Where does this lead?");
-          })
-          .on('pointerdown', () => {
-              this.gotoScene('Second Room');
-          });
+            .setFontSize(this.s * 2)
+            .setInteractive()
+            .on('pointerover', () => {
+                this.showMessage("Where does this lead?");
+            })
+            .on('pointerdown', () => {
+                this.gotoScene('Second Room');
+            });
 
         this.add.text(this.w * 0.6, this.w * 0.8, "Go Straight")
-        .setFontSize(this.s * 2)
-          .setInteractive()
-          .on('pointerover', () => {
+            .setFontSize(this.s * 2)
+            .setInteractive()
+            .on('pointerover', () => {
               this.showMessage("Where does this lead?");
-          })
-          .on('pointerdown', () => {
+            })
+            .on('pointerdown', () => {
               this.gotoScene('Third Room');
-          });
+            });
 
 //currently set to collect rock, should I only move it off??
-           let Rock = this.add.text(this.w * 0.3, this.w * 0.3, "Rock")
+        let Rock = this.add.text(this.w * 0.3, this.w * 0.3, "Rock")
             .setFontSize(this.s * 2)
             .setInteractive()
             .on('pointerover', () => this.showMessage("Stone, heavy."))
-             .on('pointerdown', () => {
-                this.showMessage("You picked up a Rock.");//you moved a Rock
-                this.gainItem('Key');
+            .on('pointerdown', () => {
+                this.showMessage("You picked up a Rock.");
+                this.gainItem('Rock');
                 this.tweens.add({
                     targets: Rock,
                     y: `-=${2 * this.s}`,
@@ -172,11 +206,11 @@ class FirstRoom extends AdventureScene {
                 }
                 )});
 
-                let RightFire = this.text(this.w * 0.3, this.w * 0.3, "Torch")
-                .setFontSize(this.s * 2)
-                .setInteractive()
-                .on('pointerover', ("Torch, Embeded in the wall."))
-                   .on('pointerdown', () => {
+        let RightFire = this.text(this.w * 0.3, this.w * 0.3, "Right Fire")
+            .setFontSize(this.s * 2)
+            .setInteractive()
+            .on('pointerover', ("Torch, Embeded in the wall."))
+            .on('pointerdown', () => {
                 this.showMessage("Hot! No touching!");
                 this.tweens.add({
                     targets: clip,
@@ -187,7 +221,7 @@ class FirstRoom extends AdventureScene {
                     duration: 100
                 })});
 //check spacing for how let .. should be aligning compared to onEnter and other                
-            let File = this.add.text(this.w * 0.5, this.w * 0.1, "File")
+        let File = this.add.text(this.w * 0.5, this.w * 0.1, "File")
             .setFontSize(this.s * 2)
             .setInteractive()
             .on('pointerover', () => {
@@ -243,7 +277,7 @@ class SecondRoom extends AdventureScene {
                   this.gotoScene('Third Room');
               });
 
-            let Key = this.add.text(this.w * 0.5, this.w * 0.1, "🔑 key")
+        let Key = this.add.text(this.w * 0.5, this.w * 0.1, "Key")
             .setFontSize(this.s * 2)
             .setInteractive()
             .on('pointerover', () => {
@@ -259,6 +293,20 @@ class SecondRoom extends AdventureScene {
                     duration: 500,
                    onComplete: () => Key.destroy()
                 });
+        let LeftFire = this.text(this.w * 0.3, this.w * 0.3, "Left Fire")
+            .setFontSize(this.s * 2)
+            .setInteractive()
+            .on('pointerover', ("Torch, Embeded in the wall."))
+            .on('pointerdown', () => {
+                this.showMessage("Hot! No touching!");
+                this.tweens.add({
+                    targets: clip,
+                    x: '+=' + this.s,
+                    repeat: 2,
+                    yoyo: true,
+                    ease: 'Sine.inOut',
+                    duration: 100
+                    })});
             })
 
     //    let door = this.add.text(this.w * 0.1, this.w * 0.15, "🚪 locked door")
@@ -310,12 +358,81 @@ class ThirdRoom extends AdventureScene {
         this.add.image(320,210, 'Right Fire').setScale(0.50);
         this.add.image(320,210, 'Flower').setScale(0.50);
         this.add.image(320,210, 'Flower').setScale(0.50);
-        this.add.image(320,210, 'Mouse').setScale(0.50);
-        this.add.image(320,210, 'Door').setScale(0.50);
+        let Mouse = this.add.image(320,210, 'Mouse').setScale(0.50);
+        let door = this.add.image(320,210, 'Door').setScale(0.50);
     }
 
     onEnter() {
+        let RightFire = this.text(this.w * 0.3, this.w * 0.3, "Right Fire")
+            .setFontSize(this.s * 2)
+            .setInteractive()
+            .on('pointerover', ("Torch, Embeded in the wall."))
+            .on('pointerdown', () => {
+                this.showMessage("Hot! No touching!");
+                this.tweens.add({
+                    targets: clip,
+                    x: '+=' + this.s,
+                    repeat: 2,
+                   yoyo: true,
+                    ease: 'Sine.inOut',
+                    duration: 100
+                })
+            })
+        let LeftFire = this.text(this.w * 0.3, this.w * 0.3, "Left Fire")
+            .setFontSize(this.s * 2)
+            .setInteractive()
+            .on('pointerover', ("Torch, Embeded in the wall."))
+            .on('pointerdown', () => {
+                this.showMessage("Hot! No touching!");
+                this.tweens.add({
+                    targets: clip,
+                    x: '+=' + this.s,
+                    repeat: 2,
+                    yoyo: true,
+                    ease: 'Sine.inOut',
+                    duration: 100
+                })
+            })
 
+        let Flower = this.add.image(this.w * 0.3, this.w * 0.3, "Flower")
+            .setFontSize(this.s * 2)
+            .setInteractive()
+            .on('pointerover', () => this.showMessage("Flower, smells nice."))
+            .on('pointerdown', () => {
+                this.showMessage("You picked up a flower.");
+                this.gainItem('Flower');
+                this.tweens.add({
+                    targets: Flower,
+                    y: `-=${2 * this.s}`,
+                    alpha: { from: 1, to: 0 },
+                    duration: 500,
+                   onComplete: () => Flower.destroy()
+                })
+            })
+
+        //let Mouse = this.add.image
+        let door = this.add.text(this.w * 0.1, this.w * 0.15, "locked door")
+            .setFontSize(this.s * 2)
+            .setInteractive()
+            .on('pointerover', () => {
+                if (this.hasItem("Key")) {
+                    this.showMessage("You've got the key for this door.");
+                } else {
+                    this.showMessage("It's locked. You do not have the key for this door.");
+                }
+            })
+            .on('pointerdown', () => {
+                if (this.hasItem("Key")) {
+                    this.loseItem("Key");
+                    this.showMessage("*squeak*");
+                    door.setText("unlocked door");
+                    this.gotoScene('Freedom');
+                } else {
+                    this.showMessage("You could not get the door open in time.");
+                    door.setText("door locked");
+                    this.gotoScene('Capture');
+                }
+            })
     }
 }
 
@@ -331,8 +448,8 @@ class Freedom extends Phaser.Scene {
         this.add.image(320,210, 'Freedom').setScale(0.50);
         this.add.image(320,210, 'Left Fire').setScale(0.50);
         this.add.image(320,210, 'Right Fire').setScale(0.50);
-        this.add.text(50, 50, "Mission Complete!").setFontSize(50);
-        this.add.text(50, 100, "Click anywhere to restart.").setFontSize(20);
+        this.add.text(500, 500, "Mission Complete!").setFontSize(50);
+        this.add.text(500, 900, "Click anywhere to restart.").setFontSize(40);
         this.input.on('pointerdown', () => this.scene.start('Cover'));
     }
 }
@@ -348,8 +465,8 @@ class Capture extends Phaser.Scene {
         this.add.image(320,210, 'Mission Failed').setScale(0.50);
         this.add.image(320,210, 'Left Fire').setScale(0.50);
         this.add.image(320,210, 'Right Fire').setScale(0.50);
-        this.add.text(50, 50, "You have been captured by the enemy!").setFontSize(50);
-        this.add.text(50, 100, "Click anywhere to restart.").setFontSize(20);
+        this.add.text(300, 500, "You have been captured by the enemy!").setFontSize(50);
+        this.add.text(500, 900, "Click anywhere to restart.").setFontSize(40);
         this.input.on('pointerdown', () => this.scene.start('Cover'));
     }
 }
@@ -362,7 +479,8 @@ const game = new Phaser.Game({
         width: 1920,
         height: 1080
     },
-    scene: [Cover, Intro, FirstRoom, SecondRoom, ThirdRoom, FourthRoom, Freedom, Capture],
+    scene: [Entrance],
+    //scene: [Cover, Intro, Entrance, FirstRoom, SecondRoom, ThirdRoom, Freedom, Capture],
     title: "Adventure Game",
 });
 
