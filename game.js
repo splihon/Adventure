@@ -94,12 +94,13 @@ class Entrance extends AdventureScene {
         super("Entrance");
     }
     preload(){
+        this.load.path = './assets/';
         this.load.image('Entrance','Entrance.png');
         this.load.image('Rock', 'Rock.png');
         this.load.image('Flower', 'Flower.png');
     }
     create(){
-        let Entrance = this.add.image(320,210, 'Entrance').setOrigin(0,0);
+        let Entrance = this.add.image(320,210, 'Entrance').setOrigin(0,0).setScale(0.50);
         let Flowera = this.add.image(400,203, 'Flower').setScale(0.50);
         let Flowerb = this.add.image(400,206, 'Flower').setScale(0.50);
         let Flowerc = this.add.image(400,209, 'Flower').setScale(0.50);
@@ -172,6 +173,7 @@ class FirstRoom extends AdventureScene {
         super("First Room");
     }
     preload(){
+        this.load.path = './assets/';
         this.load.image('FirstRoom','FirstRoom.png');
         this.load.image('File','File.png');
     }
@@ -262,6 +264,7 @@ class SecondRoom extends AdventureScene {
         super("Second Room");
     }
     preload(){
+        this.load.path = './assets/';
         this.load.image('SecondRoom','SecondRoom.png');
         this.load.image('Key','Key.png');
     }
@@ -362,6 +365,7 @@ class ThirdRoom extends AdventureScene {
         super("Third Room");
     }
     preload(){
+        this.load.path = './assets/';
         this.load.image('ThirdRoom','ThirdRoom.png');
         this.load.image('Door','Door.png');
         this.load.image('Mouse','Mouse.png');
@@ -456,6 +460,7 @@ class Freedom extends Phaser.Scene {
         super('Freedom');
     }
     preload(){
+        this.load.path = './assets/';
         this.load.image('Freedom','Freedom.png');
     }
     create() {
@@ -482,6 +487,7 @@ class Capture extends Phaser.Scene {
         super('Capture');
     }
     preload(){
+        this.load.path = './assets/';
         this.load.image('Mission Failed','Mission Failed.png');
     }
     create() {
