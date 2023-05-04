@@ -116,10 +116,17 @@ class Entrance extends AdventureScene {
     }
     onEnter(){
     //create(){
-        let Entrance = this.add.image(320,210, 'Entrance').setOrigin(0,0).setScale(0.60);
-        let Flowera = this.add.image(400,203, 'Flower').setScale(0.50);
+//for some reason only flowerc shows a message
+//also need to fix transition so that it does not match picking up item
+//how to get all items above Entrance image
+//how to get Entrance Image in the middle behind invetory
+//how to get message for rocks
+//why are there four flowers but only created three??
+//why is the text enter cave not showing??
+        let Entrance = this.add.image(320,210, 'Entrance').setOrigin(0.30,0.20).setScale(0.83);
+        let Flowera = this.add.image(100,203, 'Flower').setScale(0.50);
         let Flowerb = this.add.image(500,213, 'Flower').setScale(0.50);
-        let Flowerc = this.add.image(600,229, 'Flower').setScale(0.50);
+        let Flowerc = this.add.image(800,229, 'Flower').setScale(0.50);
         let Rocka = this.add.image(200,200, 'Rock').setScale(0.50);
         let Rockb = this.add.image(200,300, 'Rock').setScale(0.50);
 //not working to show images??
@@ -142,6 +149,7 @@ class Entrance extends AdventureScene {
     //onEnter(){
         this.add.text(this.w * 0.6, this.w * 0.8, "Enter Cave")
             .setFontSize(this.s * 2)
+            .depth = 3;//not working to show text??
         //let Entrance = this.add.image(320,210, 'Entrance')//.setOrigin(0,0);
         //still not working??
             Entrance.setInteractive()
@@ -195,28 +203,32 @@ class FirstRoom extends AdventureScene {
         this.load.path = './assets/';
         this.load.image('FirstRoom','FirstRoom.png');
         this.load.image('File','File.png');
+        this.load.image("Rock","Rock.png");
+        this.load.image("Right Fire", "Right Fire.png")
     }
+//so confused, only one file shows up while two torchs and rocks showed up when unoted below, but none show message????
     onEnter(){
     //create(){
-        this.add.image(320,210, 'FirstRoom').setScale(0.50);
-        this.add.image(320,210, 'File').setScale(0.50);
+        this.add.image(320,210, 'FirstRoom').setOrigin(0.30,0.20).setScale(0.83);
+        //this.add.image(320,210, 'File').setScale(0.50);
         //I am possibly defining the 'Rock' variable twice,maybe?
-        //let Rock = this.add.image(320,210, 'Rock').setScale(0.50);
+        //let Rock = 
+        //this.add.image(320,210, 'Rock').setScale(0.50);
         //let RightFire = 
-        this.add.image(320,210, 'Right Fire').setScale(0.50);
+        //this.add.image(520,550, 'Right Fire').setScale(0.50);
     //}
     //onEnter() {
-        this.add.text(this.w * 0.6, this.w * 0.8, "Turn Left")
+        this.add.text(this.w * 0.2, this.w * 0.5, "Turn Left")
             .setFontSize(this.s * 2)
             .setInteractive()
             .on('pointerover', () => {
-                this.showMessage("Where does this lead?");
+                this.showMessage("What is over here?");
             })
             .on('pointerdown', () => {
                 this.gotoScene('Second Room');
             });
 
-        this.add.text(this.w * 0.6, this.w * 0.8, "Go Straight")
+        this.add.text(this.w * 0.4, this.w * 0.5, "Go Straight")
             .setFontSize(this.s * 2)
             .setInteractive()
             .on('pointerover', () => {
@@ -292,16 +304,18 @@ class SecondRoom extends AdventureScene {
         this.load.path = './assets/';
         this.load.image('SecondRoom','SecondRoom.png');
         this.load.image('Key','Key.png');
+        this.load.image("Left Fire", "Left Fire.png")
     }
     onEnter() {
     //create(){
-        this.add.image(320,210, 'SecondRoom').setScale(0.50);
-        this.add.image(320,210, 'Left Fire').setScale(0.50);
-        this.add.image(320,210, 'Key').setScale(0.50);
+        this.add.image(320,210, 'SecondRoom').setOrigin(0.30,0.20).setScale(0.83);
+        let LeftFire = this.add.image(40,550, 'Left Fire').setScale(0.40);
+        //this.add.image(320,210, 'Key').setScale(-0.11);
+// I dont understand why there are two keys and on how to make the below interaction go along with the loaded image of key above???
     //}
     //onEnter() {
 //should i take out go back and only have an option to turn right??
-        this.add.text(this.w * 0.3, this.w * 0.4, "Go back")
+        this.add.text(this.w * 0.2, this.w * 0.5, "Go back")
           .setFontSize(this.s * 2)
             .setInteractive()
       //      .on('pointerover', () => {
@@ -311,7 +325,7 @@ class SecondRoom extends AdventureScene {
                 this.gotoScene('First Room');
             });
 
-        this.add.text(this.w * 0.6, this.w * 0.8, "Turn Right")
+        this.add.text(this.w * 0.4, this.w * 0.5, "Turn Right")
             .setFontSize(this.s * 2)
               .setInteractive()
         //      .on('pointerover', () => {
@@ -321,12 +335,12 @@ class SecondRoom extends AdventureScene {
                   this.gotoScene('Third Room');
               });
 
-        let Key = this.add.image(320,210, 'Key').setScale(0.50);
+        let Key = this.add.image(600,650, 'Key').setScale(0.30);
               //let Key = this.add.(this.w * 0.5, this.w * 0.1, "Key")
             //.setFontSize(this.s * 2)
             Key.setInteractive()
             .on('pointerover', () => {
-             this.showMessage("Seems important. . .")
+             this.showMessage("Seems important. .")
            })
             .on('pointerdown', () => {
                 this.showMessage("You picked up the key.");
@@ -338,8 +352,10 @@ class SecondRoom extends AdventureScene {
                     duration: 500,
                    onComplete: () => Key.destroy()
                 });
+//not sure why i had two fires for a sec and then none?? but doesnt respond pointover
         //let LeftFire = this.text(this.w * 0.3, this.w * 0.3, "Left Fire")
-        let LeftFire = this.add.image(320,210, 'Left Fire').setScale(0.50);
+        //let LeftFire = 
+        this.add.image(40,550, 'Left Fire').setScale(0.40);
         //.setFontSize(this.s * 2)
         LeftFire.setInteractive()
             .on('pointerover', ("Torch, Embeded in the wall."))
@@ -401,7 +417,7 @@ class ThirdRoom extends AdventureScene {
     }
     onEnter() {
     //create(){
-        this.add.image(320,210, 'SecondRoom').setScale(0.50);
+        this.add.image(320,210, 'ThirdRoom').setOrigin(0.30,0.20).setScale(0.83);
         this.add.image(320,210, 'Left Fire').setScale(0.50);
         this.add.image(320,210, 'Right Fire').setScale(0.50);
         this.add.image(320,210, 'Flower').setScale(0.50);
@@ -561,7 +577,7 @@ const game = new Phaser.Game({
         width: 1920,
         height: 1080
     },
-    scene: [Cover, Intro],
+    scene: [FirstRoom],
     //scene: [Cover, Intro, Entrance, FirstRoom, SecondRoom, ThirdRoom, Freedom, Capture],
     title: "Adventure Game",
 });
