@@ -12,11 +12,17 @@ class Cover extends Phaser.Scene {
     
     }
     create(){
-        this.add.image(320,210, 'Top Secret').setScale(0.50);
-        this.add.image(220,100, 'Left Fire').setScale(0.50);
-        this.add.image(220,400, 'Right Fire').setScale(0.50);
-        this.add.text(420,210, "The World Needs You!").setFontSize(50);
-        this.add.text(50,100, "Click anywhere to begin.").setFontSize(20);
+        let topsecret = this.add.image(830,600, 'Top Secret').setScale(0.80);
+        let LeftFire = this.add.image(120,700, 'Left Fire').setScale(0.50);
+        let RightFire = this.add.image(1200,600, 'Right Fire').setScale(0.50);
+      //add tween delays for text  
+        this.add.text(700,600, "The World Needs You!").setFontSize(50);
+        this.add.text(700,740, "Click anywhere to begin.").setFontSize(40);
+        
+        topsecret.depth = 1;
+        LeftFire.depth = 2;
+        RightFire.depth = 2;
+
         this.input.on('pointerdown', () => {
             this.cameras.main.fade(1000, 0,0,0);
             this.time.delayedCall(1000, () => this.scene.start("Intro"));
@@ -35,7 +41,7 @@ class Intro extends Phaser.Scene {
         let textc = this.add.text(40,430, "You must retrieve the stolen files, while evading capture.").setFontSize(50);
         let textd = this.add.text(300,580, "Best of Luck.").setFontSize(50);
         let texte = this.add.text(500,900, "Click anywhere to continue.").setFontSize(40);
-
+//delay is not working??
         this.tweens.add({
             targets: texta,
             duration: 1000,
@@ -93,12 +99,20 @@ class Entrance extends AdventureScene {
         this.load.image('Flower', 'Flower.png');
     }
     create(){
-        this.add.image(320,210, 'Entrance').setOrigin(0,0);
-        this.add.image(400,203, 'Flower').setScale(0.50);
-        this.add.image(400,206, 'Flower').setScale(0.50);
-        this.add.image(400,209, 'Flower').setScale(0.50);
-        this.add.image(200,200, 'Rock').setScale(0.50);
-        this.add.image(400,300, 'Rock').setScale(0.50);
+        let Entrance = this.add.image(320,210, 'Entrance').setOrigin(0,0);
+        let Flowera = this.add.image(400,203, 'Flower').setScale(0.50);
+        let Flowerb = this.add.image(400,206, 'Flower').setScale(0.50);
+        let Flowerc = this.add.image(400,209, 'Flower').setScale(0.50);
+        let Rocka = this.add.image(200,200, 'Rock').setScale(0.50);
+        let Rockb = this.add.image(400,300, 'Rock').setScale(0.50);
+//not working to show images??
+        Entrance.depth = 1;
+        Flowera.depth = 2;
+        Flowerb.depth = 2;
+        Flowerc.depth = 2;
+        Rocka.depth = 2;
+        Rocka.depth = 2;
+
 //Q: does this need to go after onEnter, or maybe put onEnter above create?? 
 //F: if starts to work check on how long the delay is,and if it is sufficent time   
         this.input.on('pointerdown', () => {
@@ -445,12 +459,21 @@ class Freedom extends Phaser.Scene {
         this.load.image('Freedom','Freedom.png');
     }
     create() {
-        this.add.image(320,210, 'Freedom').setScale(0.50);
-        this.add.image(320,210, 'Left Fire').setScale(0.50);
-        this.add.image(320,210, 'Right Fire').setScale(0.50);
+        let freedom = this.add.image(320,210, 'Freedom').setScale(0.50);
+        let LeftFireb = this.add.image(320,210, 'Left Fire').setScale(0.50);
+        let RightFireb = this.add.image(320,210, 'Right Fire').setScale(0.50);
         this.add.text(500, 500, "Mission Complete!").setFontSize(50);
         this.add.text(500, 900, "Click anywhere to restart.").setFontSize(40);
+        //not working to load images???
+        freedom.depth = 1;
+        LeftFireb.depth = 2;
+        RightFireb.depth = 2;
+
         this.input.on('pointerdown', () => this.scene.start('Cover'));
+        //this.input.on('pointerdown', () => {
+        //    this.cameras.main.fade(1000, 0,0,0);
+         //   this.time.delayedCall(4000, () => this.scene.start("Intro"));
+        //    });
     }
 }
 
@@ -462,12 +485,21 @@ class Capture extends Phaser.Scene {
         this.load.image('Mission Failed','Mission Failed.png');
     }
     create() {
-        this.add.image(320,210, 'Mission Failed').setScale(0.50);
-        this.add.image(320,210, 'Left Fire').setScale(0.50);
+        let MissionFailed = this.add.image(320,210, 'Mission Failed').setScale(0.50);
+        let LeftFirec = this.add.image(320,210, 'Left Fire').setScale(0.50);
         this.add.image(320,210, 'Right Fire').setScale(0.50);
         this.add.text(300, 500, "You have been captured by the enemy!").setFontSize(50);
         this.add.text(500, 900, "Click anywhere to restart.").setFontSize(40);
+        
+        MissionFailed.depth = 1;
+        LeftFirec =  2;
+
         this.input.on('pointerdown', () => this.scene.start('Cover'));
+        
+        //this.input.on('pointerdown', () => {
+        //    this.cameras.main.fade(1000, 0,0,0);
+         //   this.time.delayedCall(1000, () => this.scene.start("Intro"));
+        //    });
     }
 }
 
@@ -479,7 +511,7 @@ const game = new Phaser.Game({
         width: 1920,
         height: 1080
     },
-    scene: [Entrance],
+    scene: [Cover],
     //scene: [Cover, Intro, Entrance, FirstRoom, SecondRoom, ThirdRoom, Freedom, Capture],
     title: "Adventure Game",
 });
