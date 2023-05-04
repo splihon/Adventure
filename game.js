@@ -17,7 +17,7 @@ class Cover extends Phaser.Scene {
         let RightFire = this.add.image(1200,600, 'Right Fire').setScale(0.50);
       //add tween delays for text  
         this.add.text(700,600, "The World Needs You!").setFontSize(50);
-        this.add.text(700,740, "Click anywhere to begin.").setFontSize(40);
+        this.add.text(700,700, "Click anywhere to begin.").setFontSize(40);
         
         topsecret.depth = 1;
         LeftFire.depth = 2;
@@ -511,8 +511,8 @@ const game = new Phaser.Game({
         width: 1920,
         height: 1080
     },
-    scene: [Cover],
-    //scene: [Cover, Intro, Entrance, FirstRoom, SecondRoom, ThirdRoom, Freedom, Capture],
+    //scene: [Cover],
+    scene: [Cover, Intro, Entrance, FirstRoom, SecondRoom, ThirdRoom, Freedom, Capture],
     title: "Adventure Game",
 });
 
