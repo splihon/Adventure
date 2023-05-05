@@ -1,6 +1,7 @@
 //things to work on: third room, taking things out of inventory?,
 //third room: door, (pull key for door?), mouse, flames
 //add another command in adventure (for notouching and maybe move)
+//gainItem command is used, but it doesn't say I already have this item?
 class Cover extends Phaser.Scene {
     constructor(){
         super("Cover");
@@ -139,24 +140,31 @@ class Entrance extends AdventureScene {
             .on('pointerover', () => this.showMessage("This must be where I can find the documents."))
             
         Rocka.setInteractive()
-            .on('pointerover', () => this.showMessage("Stone, heavy."))
+            .on('pointerover', () => this.showMessage("Should I move the rock?"))
             .on('pointerdown', () => {
-                this.showMessage("You picked up a rock.");
-                this.gainItem('Rock');
-                    this.collecting(Rocka);
+                // this.showMessage("You picked up a rock.");
+                // this.gainItem('Rock');
+                //     this.collecting(Rocka);
+                this.input.setDraggable(Rocka);
+                this.input.on('drag', (pointer, image, dragX, dragY) =>{
+                    image.x = dragX;
+                    image.y = dragY;
                 });
+            });
 
         Rockb.setInteractive()
-            .on('pointerover', () => this.showMessage("Stone, heavy."))
+            .on('pointerover', () => this.showMessage("Should I move the rock?"))
             .on('pointerdown', () => {
-                this.showMessage("You picked up a rock.");
-                this.gainItem('Rock');
-                    this.collecting(Rockb);
+                // this.showMessage("You picked up a rock.");
+                // this.gainItem('Rock');
+                //     this.collecting(Rockb);
+                    this.input.setDraggable(Rockb);
+                this.input.on('drag', (pointer, image, dragX, dragY) =>{
+                    image.x = dragX;
+                    image.y = dragY;
                 });
-        //let Flower = this.add.image(this.w * 0.3, this.w * 0.3, "Flower")
-        //let Flower = this.add.image(320,210, 'Flower').setScale(0.50);
-            //.setFontSize(this.s * 2)
-    // one out of two to item to adventure (this."action"(item);)
+            });
+
         Flowera.setInteractive()
             .on('pointerover', () => this.showMessage("Flower, smells nice."))
             .on('pointerdown', () => {
@@ -223,12 +231,17 @@ class FirstRoom extends AdventureScene {
     
         let Rock = this.add.image(780,770, 'Rock').setScale(0.50);
         Rock.setInteractive()
-            .on('pointerover', () => this.showMessage("Stone, heavy."))
+            .on('pointerover', () => this.showMessage("Hmm, should I move rock to see what it is hiding?"))
             .on('pointerdown', () => {
-                this.showMessage("You picked up a Rock.");
-                this.gainItem('Rock');
-                   this.collecting(Rock);
+                // this.showMessage("You picked up a Rock.");
+                // this.gainItem('Rock');
+                //    this.collecting(Rock);
+                this.input.setDraggable(Rock);
+                this.input.on('drag', (pointer, image, dragX, dragY) =>{
+                    image.x = dragX;
+                    image.y = dragY;
                 });
+            });
 
         let rightfire = this.add.image(1200,350, 'rightfire').setScale(0.50)
             .setInteractive()
@@ -306,6 +319,7 @@ class SecondRoom extends AdventureScene {
        //     })
        //     .on('pointerdown', () => this.gotoScene('outro'));
     }
+
 
 
 class ThirdRoom extends AdventureScene {
@@ -397,10 +411,6 @@ class ThirdRoom extends AdventureScene {
                     this.showMessage("*squeak*");
                     Door.setText("unlocked door");
                     this.gotoScene('Freedom');
-                } else {
-                    this.showMessage("You could not get the door open in time.");
-                    Door.setText("door locked");
-                    this.gotoScene('Capture');
                 }
             })
         
@@ -515,8 +525,8 @@ const game = new Phaser.Game({
         width: 1920,
         height: 1080
     },
-    scene: [ThirdRoom],
-    //scene: [Cover, Intro, Entrance, FirstRoom, SecondRoom, ThirdRoom, Freedom, Capture],
+    //scene: [ThirdRoom],
+    scene: [Cover, Intro, Entrance, FirstRoom, SecondRoom, ThirdRoom, Freedom, Capture],
     title: "Adventure Game",
 });
 
