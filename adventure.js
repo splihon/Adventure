@@ -143,7 +143,7 @@ class AdventureScene extends Phaser.Scene {
             this.scene.start(key, { inventory: this.inventory });
         });
     }
-//one out of two
+//First enhancement
     collecting(item){
         this.tweens.add({
             targets: item,
@@ -153,7 +153,7 @@ class AdventureScene extends Phaser.Scene {
             onComplete: () => item.destroy()
         });
     }
-//two out of two
+//Second enhancement
     notouching(item){
         this.tweens.add({
             targets: item,
@@ -164,27 +164,7 @@ class AdventureScene extends Phaser.Scene {
             duration: 100
         });
     }
-//possible additional third command
-//this.add.image(320,210, 'ThirdRoom').setOrigin(0.30,0.20).setScale(0.83);
 
-    // move(item){
-    //     this.tweens.add({
-    //         targets: item,
-    //         x: 10,
-    //         y: 1000,
-    //         duration: 500,
-    //         onComplete: () => {
-    //             item.setVisible(false);
-    //         }
-            
-    //     });
-    setDraggable(item){
-        this.input.on('drag', (pointer, image, dragX, dragY) =>{
-            image.x = dragX;
-            image.y = dragY;
-        });
-    }
-    
     onEnter() {
         console.warn('This AdventureScene did not implement onEnter():', this.constructor.name);
     }
