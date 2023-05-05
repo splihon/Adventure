@@ -145,16 +145,25 @@ class AdventureScene extends Phaser.Scene {
     }
 //one out of two
     collecting(item){
-    //this.showMessage("You picked up a flower.");
-                //this.gainItem('Flower');
-                this.tweens.add({
-                    targets: item,
-                    y: `-=${2 * this.s}`,
-                    alpha: { from: 1, to: 0 },
-                    duration: 500,
-                    onComplete: () => item.destroy()
-                })
-            }
+        this.tweens.add({
+            targets: item,
+            y: `-=${2 * this.s}`,
+            alpha: { from: 1, to: 0 },
+            duration: 500,
+            onComplete: () => item.destroy()
+        });
+    }
+//two out of two
+    notouching(item){
+        this.tweens.add({
+            targets: item,
+            x: '+=' + this.s,
+            repeat: 2,
+            yoyo: true,
+            ease: 'Sine.inOut',
+            duration: 100
+        });
+    }
     onEnter() {
         console.warn('This AdventureScene did not implement onEnter():', this.constructor.name);
     }
