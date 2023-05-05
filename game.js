@@ -10,7 +10,7 @@ class Cover extends Phaser.Scene {
     
     }
     create(){
-        let topsecret = this.add.image(930,400, 'Top Secret').setScale(0.80);
+        let topsecret = this.add.image(930,430, 'Top Secret').setScale(0.90);
         let LeftFire = this.add.image(400,500, 'Left Fire').setScale(0.50);
         let rightfire = this.add.image(1500,500, 'rightfire').setScale(0.50);
         let texta = this.add.text(550,600, "The World Needs You!").setFontSize(70).setAlpha(0);
@@ -49,7 +49,7 @@ class Intro extends Phaser.Scene {
     }
     create() {
         let texta = this.add.text(70,90, "The world is in danger once more. . .").setFontSize(50).setAlpha(0);
-        let textb = this.add.text(150,300, "Your Mission:").setFontSize(70).setAlpha(0);
+        let textb = this.add.text(150,300, "Your Mission:").setTint(0xff0000).setFontSize(70).setAlpha(0);
         let textc = this.add.text(40,430, "You must retrieve the stolen files, while evading capture.").setFontSize(50).setAlpha(0);
         let textd = this.add.text(300,580, "Best of Luck.").setFontSize(50).setAlpha(0);
         let texte = this.add.text(700,900, "Click anywhere to continue.").setFontSize(40).setAlpha(0);
@@ -362,16 +362,20 @@ class ThirdRoom extends AdventureScene {
                 }
             })
             .on('pointerdown', () => {
-                if (this.hasItem("Key")) {
+                if (this.hasItem("Key") && this.hasItem("File")) {
                     this.loseItem("Key");
                     this.showMessage("*squeak*");
                         this.gotoScene('Freedom');
+                } else if (this.hasItem("Key") &&! this.hasItem("File")) {
+                    this.loseItem("Key");
+                    //this.showMessage("You needed to retrieve the stolen files to complete the mission.");
+                    this.gotoScene("Missionfailed");
                 } else {
                     this.showMessage("It's locked. You do not have the key for this door.");
                     this.notouching(Door);
                 }
                 
-            }) 
+            });
     }
 }
 
@@ -384,12 +388,13 @@ class Freedom extends Phaser.Scene {
         this.load.image('Freedom','Freedom.png');
         this.load.image("Left Fire", "Left Fire.png");
         this.load.image("rightfire", "rightfire.png");
+        this.load.image("missioncomplete", "missioncomplete.png")
     }
     create() {
         this.add.image(320,210, 'Freedom').setOrigin(0.20,0.154).setScale(1.2);
         this.add.image(320,310, 'Left Fire').setScale(0.50);
         this.add.image(1700,310, 'rightfire').setScale(0.50);
-        this.add.text(650, 600, "Mission Complete!").setFontSize(70);
+        this.add.image(1020, 550, "missioncomplete").setScale(.90);
         this.add.text(700, 900, "Click anywhere to restart.").setFontSize(40);
         this.input.on('pointerdown', () => this.scene.start('Cover'));
     }
@@ -416,6 +421,27 @@ class Capture extends Phaser.Scene {
     }
 }
 
+class Missionfailed extends Phaser.Scene {
+    constructor() {
+        super('Missionfailed');
+    }
+    preload(){
+        this.load.path = './assets/';
+        this.load.image('missionfailed2','missionfailed2.png');
+        this.load.image('Left Fire', 'Left Fire.png');
+        this.load.image('rightfire', 'rightfire.png');
+    }
+    create() {
+        this.add.image(930,430, 'missionfailed2').setScale(0.90);
+        this.add.image(400,500, 'Left Fire').setScale(0.50);
+        this.add.image(1500,500, 'rightfire').setScale(0.50);
+        this.add.text(610,600, "You needed to retrieve").setFontSize(50);
+        this.add.text(350, 690, "the stolen files to complete the mission!").setFontSize(50);
+        this.add.text(700, 900, "Click anywhere to restart.").setFontSize(40);
+        this.input.on('pointerdown', () => this.scene.start('Cover'));
+    }
+}
+
 
 const game = new Phaser.Game({
     scale: {
@@ -424,7 +450,8 @@ const game = new Phaser.Game({
         width: 1920,
         height: 1080
     },
-    scene: [Cover, Intro, Entrance, FirstRoom, SecondRoom, ThirdRoom, Freedom, Capture],
+    scene: [Freedom],
+    //scene: [Cover, Intro, Entrance, FirstRoom, SecondRoom, ThirdRoom, Freedom, Capture, Missionfailed],
     title: "Adventure Game",
 });
 
