@@ -483,30 +483,55 @@ class ThirdRoom extends AdventureScene {
         this.load.image('ThirdRoom','ThirdRoom.png');
         this.load.image('Door','Door.png');
         this.load.image('Mouse','Mouse.png');
+        this.load.image('rightfire','rightfire.png');
+        this.load.image('Left Fire', 'Left Fire.png');
+        this.load.image('Flower','Flower.png');
     }
     onEnter() {
     //create(){
+        //let ThirdRoom = 
         this.add.image(320,210, 'ThirdRoom').setOrigin(0.30,0.20).setScale(0.83);
+        //ThirdRoom.depth = 1;
         this.add.image(320,210, 'Left Fire').setScale(0.50);
-        this.add.image(320,210, 'Right Fire').setScale(0.50);
+        // this.add.image(320,210, 'rightflower').setScale(0.50);
         this.add.image(320,210, 'Flower').setScale(0.50);
         this.add.image(320,210, 'Flower').setScale(0.50);
         this.add.image(320,210, 'Mouse').setScale(0.30);
+        
         this.add.image(320,210, 'Door').setScale(0.50);
+        Door.setInteractive()
+            .on('pointerover', () => {
+                if (this.hasItem("Key")) {
+                    this.showMessage("You've got the key for this door.");
+                } else {
+                    this.showMessage("It's locked. You do not have the key for this door.");
+                }
+            })
+            .on('pointerdown', () => {
+                if (this.hasItem("Key")) {
+                    this.loseItem("Key");
+                    this.showMessage("*squeak*");
+                    Door.setText("unlocked door");
+                    this.gotoScene('Freedom');
+                } else {
+                    this.showMessage("You could not get the door open in time.");
+                    Door.setText("door locked");
+                    this.gotoScene('Capture');
+                }
+            })
     //}
 
     //onEnter() {
         //let RightFire = this.text(this.w * 0.3, this.w * 0.3, "Right Fire")
           //  .setFontSize(this.s * 2)
-          let RightFire = this.add.image(320,210, 'Right Fire').setScale(0.50);
-          RightFire.setInteractive()
-            .on('pointerover', () => {
-                this.showMessage("Torch, Embeded in the wall.");
-            })
+          //let rightfire = this.add.image(320,210, 'rightfire').setScale(0.50);
+          this.add.image(1200,210, 'rightfire').setScale(0.50);
+          rightfire.setInteractive()
+            .on('pointerover', () => this.showMessage("Torch, Embeded in the wall."))
             .on('pointerdown', () => {
                 this.showMessage("Hot! No touching!");
                 this.tweens.add({
-                    targets: RightFire,
+                    targets: rightfire,
                     x: '+=' + this.s,
                     repeat: 2,
                    yoyo: true,
@@ -516,11 +541,8 @@ class ThirdRoom extends AdventureScene {
             })
         //let LeftFire = this.text(this.w * 0.3, this.w * 0.3, "Left Fire")
         let LeftFire = this.add.image(320,210, 'Left Fire').setScale(0.50);
-        //.setFontSize(this.s * 2)
         LeftFire.setInteractive()
-            .on('pointerover', () => {
-                this.showMessage("Torch, Embeded in the wall.");
-            })
+            .on('pointerover', () => this.showMessage("Torch, Embeded in the wall."))
             .on('pointerdown', () => {
                 this.showMessage("Hot! No touching!");
                 this.tweens.add({
@@ -551,7 +573,7 @@ class ThirdRoom extends AdventureScene {
             })
 
         //let Mouse = this.add.image
-        let Mouse = this.add.image(320,210, 'Mouse').setScale(0.50);
+        let Mouse = this.add.image(420,610, 'Mouse').setScale(0.001);
         Mouse.setInteractive()
             .on('pointerover', () => {
                 this.showMessage("*squeak*");
@@ -562,31 +584,13 @@ class ThirdRoom extends AdventureScene {
             })
 
         //let door = this.add.text(this.w * 0.1, this.w * 0.15, "locked door")
-        let Door = this.add.image(320,210, 'Door').setScale(0.50);
+        //let Door = this.add.image(320,210, 'Door').setScale(0.50);
         //.setFontSize(this.s * 2)
-        Door.setInteractive()
-            .on('pointerover', () => {
-                if (this.hasItem("Key")) {
-                    this.showMessage("You've got the key for this door.");
-                } else {
-                    this.showMessage("It's locked. You do not have the key for this door.");
-                }
-            })
-            .on('pointerdown', () => {
-                if (this.hasItem("Key")) {
-                    this.loseItem("Key");
-                    this.showMessage("*squeak*");
-                    Door.setText("unlocked door");
-                    this.gotoScene('Freedom');
-                } else {
-                    this.showMessage("You could not get the door open in time.");
-                    Door.setText("door locked");
-                    this.gotoScene('Capture');
-                }
-            })
+        //this.add.image(500,210, 'Door').setScale(0.50);
+        
     }
 }
-//possibly add in an overall delay that will send to capture scene, so that can have a go back button from thrid room to find key
+//*****possibly add in an overall delay that will send to capture scene, so that can have a go back button from thrid room to find key
 
 class Freedom extends Phaser.Scene {
     constructor() {
@@ -625,13 +629,13 @@ class Capture extends Phaser.Scene {
     }
     create() {
         let MissionFailed = this.add.image(320,210, 'Mission Failed').setScale(0.50);
-        let LeftFirec = this.add.image(320,210, 'Left Fire').setScale(0.50);
+        let LeftFire = this.add.image(320,210, 'Left Fire').setScale(0.50);
         this.add.image(320,210, 'Right Fire').setScale(0.50);
         this.add.text(300, 500, "You have been captured by the enemy!").setFontSize(50);
         this.add.text(500, 900, "Click anywhere to restart.").setFontSize(40);
         
         MissionFailed.depth = 1;
-        LeftFirec =  2;
+        LeftFire =  2;
 
         this.input.on('pointerdown', () => this.scene.start('Cover'));
         

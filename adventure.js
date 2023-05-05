@@ -144,7 +144,7 @@ class AdventureScene extends Phaser.Scene {
         });
     }
 //one out of two
-    touching(item){
+    collecting(item){
     //this.showMessage("You picked up a flower.");
                 //this.gainItem('Flower');
                 this.tweens.add({
