@@ -8,15 +8,15 @@ class Cover extends Phaser.Scene {
         this.load.path = './assets/';
         this.load.image('Top Secret','Top Secret.png');
         this.load.image('Left Fire','Left Fire.png');
-        this.load.image('Right Fire','Right Fire.png');
+        this.load.image('rightfire','rightfire.png');
     
     }
     create(){
-        let topsecret = this.add.image(830,600, 'Top Secret').setScale(0.80);
-        let LeftFire = this.add.image(120,700, 'Left Fire').setScale(0.50);
-        let RightFire = this.add.image(1200,600, 'Right Fire').setScale(0.50);
+        let topsecret = this.add.image(930,400, 'Top Secret').setScale(0.80);
+        let LeftFire = this.add.image(400,500, 'Left Fire').setScale(0.50);
+        let rightfire = this.add.image(1500,500, 'rightfire').setScale(0.50);
       //add tween delays for text  
-        let texta = this.add.text(570,600, "The World Needs You!").setFontSize(70).setAlpha(0);
+        let texta = this.add.text(550,600, "The World Needs You!").setFontSize(70).setAlpha(0);
         let textb = this.add.text(700,900, "Click anywhere to begin.").setFontSize(40).setAlpha(0);
         
         this.tweens.add({
@@ -36,7 +36,7 @@ class Cover extends Phaser.Scene {
             });
         topsecret.depth = 1;
         LeftFire.depth = 2;
-        RightFire.depth = 2;
+        rightfire.depth = 2;
 
         this.input.on('pointerdown', () => {
             this.cameras.main.fade(1000, 0,0,0);
@@ -124,11 +124,11 @@ class Entrance extends AdventureScene {
 //why are there four flowers but only created three??
 //why is the text enter cave not showing??
         let Entrance = this.add.image(320,210, 'Entrance').setOrigin(0.20,0.30).setScale(0.60);
-        let Flowera = this.add.image(100,203, 'Flower').setScale(0.40);
-        let Flowerb = this.add.image(500,213, 'Flower').setScale(0.40);
-        let Flowerc = this.add.image(800,229, 'Flower').setScale(0.40);
-        let Rocka = this.add.image(200,200, 'Rock').setScale(0.50);
-        let Rockb = this.add.image(200,300, 'Rock').setScale(0.50);
+        let Flowera = this.add.image(400,703, 'Flower').setScale(0.40);
+        let Flowerb = this.add.image(500,713, 'Flower').setScale(0.40);
+        let Flowerc = this.add.image(600,709, 'Flower').setScale(0.40);
+        let Rocka = this.add.image(240,800, 'Rock').setScale(0.40);
+        let Rockb = this.add.image(900,870, 'Rock').setScale(0.40);
 //not working to show images??
 //should i delete these
         Entrance.depth = 1;
@@ -151,16 +151,19 @@ class Entrance extends AdventureScene {
     //onEnter(){
         this.add.text(this.w * 0.3, this.w * 0.5, "Enter Cave")
             .setFontSize(this.s * 2)
-            .depth = 3;//not working to show text??
-        //let Entrance = this.add.image(320,210, 'Entrance')//.setOrigin(0,0);
-        //still not working??
-            Entrance.setInteractive()
-            .on('pointerover', () => {
-                this.showMessage("This must be where I can find the documents.");
-            })
+            .setInteractive()
+            .on('pointerover', () => this.showMessage('The files must be close. .'))
             .on('pointerdown', () => {
                 this.gotoScene('First Room');
-            });
+            })
+            //.depth = 3;//not working to show text??
+        //let Entrance = this.add.image(320,210, 'Entrance')//.setOrigin(0,0);
+        //still not working??
+        Entrance.setInteractive()
+            .on('pointerover', () => this.showMessage("This must be where I can find the documents."))
+            // .on('pointerdown', () => {
+            //     this.gotoScene('First Room');
+        
         //let Rock = this.add.image(this.w * 0.3, this.w * 0.3, "Rock")
        // let Rocka = this.add.image(320, 210, 'Rock').setScale(0.50);
             //.setFontSize(this.s * 2)
@@ -176,7 +179,7 @@ class Entrance extends AdventureScene {
                 //     alpha: { from: 1, to: 0 },
                 //     duration: 500,
                 //    onComplete: () => Rocka.destroy()
-                    this.touching(Rocka);
+                    this.collecting(Rocka);
                 })
 
         Rockb.setInteractive()
@@ -191,7 +194,7 @@ class Entrance extends AdventureScene {
                 //     alpha: { from: 1, to: 0 },
                 //     duration: 500,
                 //    onComplete: () => Rockb.destroy()
-                    this.touching(Rockb);
+                    this.collecting(Rockb);
             })
         //let Flower = this.add.image(this.w * 0.3, this.w * 0.3, "Flower")
         //let Flower = this.add.image(320,210, 'Flower').setScale(0.50);
@@ -208,7 +211,7 @@ class Entrance extends AdventureScene {
                     alpha: { from: 1, to: 0 },
                     duration: 500,
                     onComplete: () => Flowera.destroy()*/
-                    this.touching(Flowera);
+                    this.collecting(Flowera);
                 })
 
         Flowerb.setInteractive()
@@ -222,7 +225,7 @@ class Entrance extends AdventureScene {
                         alpha: { from: 1, to: 0 },
                         duration: 500,
                         onComplete: () => Flowera.destroy()*/
-                    this.touching(Flowerb);
+                    this.collecting(Flowerb);
                     })
 
         Flowerc.setInteractive()
@@ -236,7 +239,7 @@ class Entrance extends AdventureScene {
                                 alpha: { from: 1, to: 0 },
                                 duration: 500,
                                 onComplete: () => Flowera.destroy()*/
-                    this.touching(Flowerc);
+                    this.collecting(Flowerc);
                     })
             }
     }
@@ -256,14 +259,12 @@ class FirstRoom extends AdventureScene {
     onEnter(){
     //create(){
         this.add.image(320,210, 'FirstRoom').setOrigin(0.30,0.20).setScale(0.83);
-        let File = this.add.image(150,710, 'File').setScale(0.20)
+        let File = this.add.image(700,780, 'File').setScale(0.20)
             .setInteractive()
-            .on('pointerover', () => {
-            this.showMessage("Found it!")
-        })
-        .on('pointerdown', () => {
-            this.showMessage("You picked up confidencial documents.");
-            this.gainItem('File');
+            .on('pointerover', () => this.showMessage("Found it!"))
+            .on('pointerdown', () => {
+                this.showMessage("You picked up confidencial documents.");
+                this.gainItem('File');
     //                this.tweens.add({
     //                    targets: File,
     //                    y: `-=${2 * this.s}`,
@@ -272,7 +273,7 @@ class FirstRoom extends AdventureScene {
     // //idea on what one of the things i change or add to other page is .move for rocks or .shake for flower bundles?(if even am understanding that part correctly )
     //                   onComplete: () => File.destroy()
     //                })
-                this.touching(File);
+                    this.collecting(File);
             });
         //I am possibly defining the 'Rock' variable twice,maybe?
         //let Rock = 
@@ -306,7 +307,7 @@ class FirstRoom extends AdventureScene {
     //   
     
     
-        let Rock = this.add.image(750,630, 'Rock').setScale(0.50);
+        let Rock = this.add.image(780,770, 'Rock').setScale(0.50);
         //.setFontSize(this.s * 2)
         Rock.setInteractive()
             .on('pointerover', () => this.showMessage("Stone, heavy."))
@@ -323,7 +324,7 @@ class FirstRoom extends AdventureScene {
     })
 ///????
         //let RightFire = 
-        let rightfire = this.add.image(800,550, 'rightfire').setScale(0.50)
+        let rightfire = this.add.image(1200,350, 'rightfire').setScale(0.50)
             .setInteractive()
             .on('pointerover', () => this.showMessage("Torch, Embeded in the wall."))
             .on('pointerdown', () => {
@@ -375,7 +376,7 @@ class SecondRoom extends AdventureScene {
     onEnter() {
     //create(){
         this.add.image(320,210, 'SecondRoom').setOrigin(0.30,0.20).setScale(0.83);
-        let LeftFire = this.add.image(40,550, 'Left Fire').setScale(0.40);
+        let LeftFire = this.add.image(100,400, 'Left Fire').setScale(0.40);
         //this.add.image(320,210, 'Key').setScale(-0.11);
 // I dont understand why there are two keys and on how to make the below interaction go along with the loaded image of key above???
     //}
@@ -401,7 +402,7 @@ class SecondRoom extends AdventureScene {
                   this.gotoScene('Third Room');
               });
 
-        let Key = this.add.image(600,650, 'Key').setScale(0.30);
+        let Key = this.add.image(600,650, 'Key').setScale(0.50);
               //let Key = this.add.(this.w * 0.5, this.w * 0.1, "Key")
             //.setFontSize(this.s * 2)
             Key.setInteractive()
@@ -490,7 +491,7 @@ class ThirdRoom extends AdventureScene {
         this.add.image(320,210, 'Right Fire').setScale(0.50);
         this.add.image(320,210, 'Flower').setScale(0.50);
         this.add.image(320,210, 'Flower').setScale(0.50);
-        this.add.image(320,210, 'Mouse').setScale(0.50);
+        this.add.image(320,210, 'Mouse').setScale(0.30);
         this.add.image(320,210, 'Door').setScale(0.50);
     //}
 
@@ -649,7 +650,7 @@ const game = new Phaser.Game({
         width: 1920,
         height: 1080
     },
-    scene: [Entrance],
+    scene: [ThirdRoom],
     //scene: [Cover, Intro, Entrance, FirstRoom, SecondRoom, ThirdRoom, Freedom, Capture],
     title: "Adventure Game",
 });
