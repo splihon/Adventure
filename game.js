@@ -356,8 +356,9 @@ class ThirdRoom extends AdventureScene {
             .on('pointerover', () => {
                 if (this.hasItem("Key")) {
                     this.showMessage("You've got the key for this door.");
-                } else {
-                    this.showMessage("It's locked. You do not have the key for this door.");
+                 } 
+                 else {
+                    this.showMessage("It's locked.");
                 }
             })
             .on('pointerdown', () => {
@@ -365,7 +366,11 @@ class ThirdRoom extends AdventureScene {
                     this.loseItem("Key");
                     this.showMessage("*squeak*");
                         this.gotoScene('Freedom');
+                } else {
+                    this.showMessage("It's locked. You do not have the key for this door.");
+                    this.notouching(Door);
                 }
+                
             }) 
     }
 }
