@@ -164,6 +164,20 @@ class AdventureScene extends Phaser.Scene {
             duration: 100
         });
     }
+//possible additional third command
+//this.add.image(320,210, 'ThirdRoom').setOrigin(0.30,0.20).setScale(0.83);
+
+    move(item){
+        this.tweens.add({
+            targets: item,
+            y: bottomBoundary,
+            duration: 1000,
+            onComplete: () => {
+                gameObject.setVisible(false)
+            }
+            
+        });
+    }
     onEnter() {
         console.warn('This AdventureScene did not implement onEnter():', this.constructor.name);
     }
