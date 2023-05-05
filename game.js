@@ -123,13 +123,14 @@ class Entrance extends AdventureScene {
 //how to get message for rocks
 //why are there four flowers but only created three??
 //why is the text enter cave not showing??
-        let Entrance = this.add.image(320,210, 'Entrance').setOrigin(0.30,0.20).setScale(0.83);
-        let Flowera = this.add.image(100,203, 'Flower').setScale(0.50);
-        let Flowerb = this.add.image(500,213, 'Flower').setScale(0.50);
-        let Flowerc = this.add.image(800,229, 'Flower').setScale(0.50);
+        let Entrance = this.add.image(320,210, 'Entrance').setOrigin(0.20,0.30).setScale(0.60);
+        let Flowera = this.add.image(100,203, 'Flower').setScale(0.40);
+        let Flowerb = this.add.image(500,213, 'Flower').setScale(0.40);
+        let Flowerc = this.add.image(800,229, 'Flower').setScale(0.40);
         let Rocka = this.add.image(200,200, 'Rock').setScale(0.50);
         let Rockb = this.add.image(200,300, 'Rock').setScale(0.50);
 //not working to show images??
+//should i delete these
         Entrance.depth = 1;
         Flowera.depth = 2;
         Flowerb.depth = 2;
@@ -148,7 +149,7 @@ class Entrance extends AdventureScene {
    // }
 //Q: thought maybe images are not showing up with it as this.add.text so changed to image but still not loading??
     //onEnter(){
-        this.add.text(this.w * 0.6, this.w * 0.8, "Enter Cave")
+        this.add.text(this.w * 0.3, this.w * 0.5, "Enter Cave")
             .setFontSize(this.s * 2)
             .depth = 3;//not working to show text??
         //let Entrance = this.add.image(320,210, 'Entrance')//.setOrigin(0,0);
@@ -169,14 +170,14 @@ class Entrance extends AdventureScene {
             .on('pointerdown', () => {
                 this.showMessage("You picked up a rock.");
                 this.gainItem('Rock');
-                this.tweens.add({
-                    targets: Rocka,
-                    y: `-=${2 * this.s}`,
-                    alpha: { from: 1, to: 0 },
-                    duration: 500,
-                   onComplete: () => Rocka.destroy()
-                }
-                )});
+                // this.tweens.add({
+                //     targets: Rocka,
+                //     y: `-=${2 * this.s}`,
+                //     alpha: { from: 1, to: 0 },
+                //     duration: 500,
+                //    onComplete: () => Rocka.destroy()
+                    this.touching(Rocka);
+                })
 
         Rockb.setInteractive()
 //possibly change so the rock moves and does not collect as on of the additions
@@ -184,14 +185,14 @@ class Entrance extends AdventureScene {
             .on('pointerdown', () => {
                 this.showMessage("You picked up a rock.");
                 this.gainItem('Rock');
-                this.tweens.add({
-                    targets: Rockb,
-                    y: `-=${2 * this.s}`,
-                    alpha: { from: 1, to: 0 },
-                    duration: 500,
-                   onComplete: () => Rockb.destroy()
-                }
-                )});
+                // this.tweens.add({
+                //     targets: Rockb,
+                //     y: `-=${2 * this.s}`,
+                //     alpha: { from: 1, to: 0 },
+                //     duration: 500,
+                //    onComplete: () => Rockb.destroy()
+                    this.touching(Rockb);
+            })
         //let Flower = this.add.image(this.w * 0.3, this.w * 0.3, "Flower")
         //let Flower = this.add.image(320,210, 'Flower').setScale(0.50);
             //.setFontSize(this.s * 2)
@@ -209,6 +210,34 @@ class Entrance extends AdventureScene {
                     onComplete: () => Flowera.destroy()*/
                     this.touching(Flowera);
                 })
+
+        Flowerb.setInteractive()
+            .on('pointerover', () => this.showMessage("Flower, smells nice."))
+            .on('pointerdown', () => {
+                this.showMessage("You picked up a flower.");
+                this.gainItem('Flower');
+                    /*this.tweens.add({
+                        targets: Flowera,
+                        y: `-=${2 * this.s}`,
+                        alpha: { from: 1, to: 0 },
+                        duration: 500,
+                        onComplete: () => Flowera.destroy()*/
+                    this.touching(Flowerb);
+                    })
+
+        Flowerc.setInteractive()
+            .on('pointerover', () => this.showMessage("Flower, smells nice."))
+            .on('pointerdown', () => {
+                this.showMessage("You picked up a flower.");
+                this.gainItem('Flower');
+                            /*this.tweens.add({
+                                targets: Flowera,
+                                y: `-=${2 * this.s}`,
+                                alpha: { from: 1, to: 0 },
+                                duration: 500,
+                                onComplete: () => Flowera.destroy()*/
+                    this.touching(Flowerc);
+                    })
             }
     }
 
@@ -620,7 +649,7 @@ const game = new Phaser.Game({
         width: 1920,
         height: 1080
     },
-    scene: [FirstRoom],
+    scene: [Entrance],
     //scene: [Cover, Intro, Entrance, FirstRoom, SecondRoom, ThirdRoom, Freedom, Capture],
     title: "Adventure Game",
 });
