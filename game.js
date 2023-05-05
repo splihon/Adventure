@@ -1,7 +1,3 @@
-//things to work on: third room, taking things out of inventory?,
-//third room: door, (pull key for door?), mouse, flames
-//add another command in adventure (for notouching and maybe move)
-//gainItem command is used, but it doesn't say I already have this item?
 class Cover extends Phaser.Scene {
     constructor(){
         super("Cover");
@@ -123,11 +119,6 @@ class Entrance extends AdventureScene {
         let Rocka = this.add.image(240,800, 'Rock').setScale(0.40);
         let Rockb = this.add.image(900,870, 'Rock').setScale(0.40);
 
-        
-        //this.input.on('pointerdown', () => {
-        //    this.cameras.main.fade(1000, 0,0,0);
-        //    this.time.delayedCall(1000, () => this.scene.start("First Room"));
-        //});
         this.add.text(this.w * 0.3, this.w * 0.5, "Enter Cave")
             .setFontSize(this.s * 2)
             .setInteractive()
@@ -142,9 +133,6 @@ class Entrance extends AdventureScene {
         Rocka.setInteractive()
             .on('pointerover', () => this.showMessage("Should I move the rock?"))
             .on('pointerdown', () => {
-                // this.showMessage("You picked up a rock.");
-                // this.gainItem('Rock');
-                //     this.collecting(Rocka);
                 this.input.setDraggable(Rocka);
                 this.input.on('drag', (pointer, image, dragX, dragY) =>{
                     image.x = dragX;
@@ -155,10 +143,7 @@ class Entrance extends AdventureScene {
         Rockb.setInteractive()
             .on('pointerover', () => this.showMessage("Should I move the rock?"))
             .on('pointerdown', () => {
-                // this.showMessage("You picked up a rock.");
-                // this.gainItem('Rock');
-                //     this.collecting(Rockb);
-                    this.input.setDraggable(Rockb);
+                this.input.setDraggable(Rockb);
                 this.input.on('drag', (pointer, image, dragX, dragY) =>{
                     image.x = dragX;
                     image.y = dragY;
@@ -298,29 +283,7 @@ class SecondRoom extends AdventureScene {
                    this.collecting(Key);
                 });
             }
-
-    //    let door = this.add.text(this.w * 0.1, this.w * 0.15, "🚪 locked door")
-    //        .setFontSize(this.s * 2)
-    //        .setInteractive()
-    //        .on('pointerover', () => {
-    //            if (this.hasItem("key")) {
-    //                this.showMessage("You've got the key for this door.");
-    //            } else {
-    //                this.showMessage("It's locked. Can you find a key?");
-    //            }
-    //        })
-    //        .on('pointerdown', () => {
-    //            if (this.hasItem("key")) {
-    //                this.loseItem("key");
-    //                this.showMessage("*squeak*");
-     //               door.setText("🚪 unlocked door");
-       //             this.gotoScene('demo2');
-         //       }
-       //     })
-       //     .on('pointerdown', () => this.gotoScene('outro'));
     }
-
-
 
 class ThirdRoom extends AdventureScene {
     constructor() {
@@ -335,24 +298,9 @@ class ThirdRoom extends AdventureScene {
         this.load.image('Left Fire', 'Left Fire.png');
         this.load.image('Flower','Flower.png');
     }
-//fix: door, fires, mouse movement
     onEnter() {
-        //const background = 
         this.add.image(320,210, 'ThirdRoom').setOrigin(0.30,0.20).setScale(0.83);
-       // background.setOrigin(0.30,0.20)
-        //const bgWidth = background.displayWidth
-        //const bgHeight = background.displayHeight
-        //const bottomBoundary = bgHeight - Mouse.height
 
-        // let Mouse = this.add.image(320,610, 'Mouse').setScale(0.06);
-        // Mouse.setInteractive()
-        //     .on('pointerover', () => this.showMessage("*squeak*"))
-        //     .on('pointerdown', () => {
-        //         this.showMessage("*squeak squeak*");
-        //             this.move(Mouse);
-        //     });
-
-       
         this.add.text(this.w * 0.2, this.w * 0.5, "Go back")
           .setFontSize(this.s * 2)
             .setInteractive()
@@ -387,7 +335,6 @@ class ThirdRoom extends AdventureScene {
                     this.collecting(Flowerb);
                 });
 
-
         let LeftFire = this.add.image(180,310, 'Left Fire').setScale(0.50);
         LeftFire.setInteractive()
             .on('pointerover', () => this.showMessage("Torch, Embeded in the wall."))
@@ -417,17 +364,9 @@ class ThirdRoom extends AdventureScene {
                 if (this.hasItem("Key")) {
                     this.loseItem("Key");
                     this.showMessage("*squeak*");
-                    //Door.showMessage("unlocked door");
                         this.gotoScene('Freedom');
                 }
-            })
-    
-
-        //let door = this.add.text(this.w * 0.1, this.w * 0.15, "locked door")
-        //let Door = this.add.image(320,210, 'Door').setScale(0.50);
-        //.setFontSize(this.s * 2)
-        //this.add.image(500,210, 'Door').setScale(0.50);
-        
+            }) 
     }
 }
 
@@ -447,13 +386,7 @@ class Freedom extends Phaser.Scene {
         this.add.image(1700,310, 'rightfire').setScale(0.50);
         this.add.text(650, 600, "Mission Complete!").setFontSize(70);
         this.add.text(700, 900, "Click anywhere to restart.").setFontSize(40);
-    
-
         this.input.on('pointerdown', () => this.scene.start('Cover'));
-        //this.input.on('pointerdown', () => {
-        //    this.cameras.main.fade(1000, 0,0,0);
-         //   this.time.delayedCall(4000, () => this.scene.start("Intro"));
-        //    });
     }
 }
 
@@ -472,7 +405,7 @@ class Capture extends Phaser.Scene {
         this.add.image(400,500, 'Left Fire').setScale(0.50);
         this.add.image(1500,500, 'rightfire').setScale(0.50);
         this.add.text(650,600, "You took too long!").setFontSize(50);
-        this.add.text(450, 690, "And are now captured by the enemy!").setFontSize(50);
+        this.add.text(450, 690, "You have been captured by the enemy!").setFontSize(50);
         this.add.text(700, 900, "Click anywhere to restart.").setFontSize(40);
         this.input.on('pointerdown', () => this.scene.start('Cover'));
     }
@@ -486,8 +419,7 @@ const game = new Phaser.Game({
         width: 1920,
         height: 1080
     },
-    scene: [SecondRoom, ThirdRoom, Freedom],
-    //scene: [Cover, Intro, Entrance, FirstRoom, SecondRoom, ThirdRoom, Freedom, Capture],
+    scene: [Cover, Intro, Entrance, FirstRoom, SecondRoom, ThirdRoom, Freedom, Capture],
     title: "Adventure Game",
 });
 
