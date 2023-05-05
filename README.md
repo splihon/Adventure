@@ -2,7 +2,7 @@ A simple adventure game by Segolen Plihon based on a simple adventure game engin
 
 Code requirements:
 - **4+ scenes based on `AdventureScene`**: My fours scenes based on the AdventureScene are the Entrance, First Room, Second Room, and Third Room.
-- **2+ scenes *not* based on `AdventureScene`**: My scenes that are not based on AdventureScene and instead extends Phaser.Scene are the Cover, Intro, Freedom, and Capture scenes.
+- **2+ scenes *not* based on `AdventureScene`**: My scenes that are not based on AdventureScene and instead extends Phaser.Scene are the Cover, Intro, Freedom, Capture, and Missionfailed scenes.
 - **2+ methods or other enhancement added to the adventure game engine to simplify my scenes**:
     - Enhancement 1: The first enhancement is called collecting and it, targets a specified item, by destroying the item off the scene and having it show in the inventory.
     - Enhancement 2: The second enhancement is called notouching and it, targets a specified item, by shaking the item for a duration of a 100 before it ends.
