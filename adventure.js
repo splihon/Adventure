@@ -170,13 +170,16 @@ class AdventureScene extends Phaser.Scene {
     move(item){
         this.tweens.add({
             targets: item,
-            y: bottomBoundary,
-            duration: 1000,
+            x: 10,
+            y: 1000,
+            duration: 500,
             onComplete: () => {
-                gameObject.setVisible(false)
+                item.setVisible(false);
             }
             
         });
+
+    
     }
     onEnter() {
         console.warn('This AdventureScene did not implement onEnter():', this.constructor.name);

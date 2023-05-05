@@ -323,20 +323,20 @@ class ThirdRoom extends AdventureScene {
     }
 //fix: door, fires, mouse movement
     onEnter() {
-        const background = this.add.image(320,210, 'ThirdRoom').setScale(0.83);
-        background.setOrigin(0.30,0.20)
-        const bgWidth = background.displayWidth
-        const bgHeight = background.displayHeight
-        const bottomBoundary = bgHeight - Mouse.height
+        const background = this.add.image(320,210, 'ThirdRoom').setOrigin(0.30,0.20).setScale(0.83);
+       // background.setOrigin(0.30,0.20)
+        //const bgWidth = background.displayWidth
+        //const bgHeight = background.displayHeight
+        //const bottomBoundary = bgHeight - Mouse.height
 
-        let Mouse = this.add.image(320,610, 'Mouse').setScale(0.06);
-        Mouse.setInteractive()
-            .on('pointerover', () => this.showMessage("*squeak*"))
-            .on('pointerdown', () => {
-                this.showMessage("*squeak squeak*");
-                    this.move(Mouse);
-            });
-            
+        // let Mouse = this.add.image(320,610, 'Mouse').setScale(0.06);
+        // Mouse.setInteractive()
+        //     .on('pointerover', () => this.showMessage("*squeak*"))
+        //     .on('pointerdown', () => {
+        //         this.showMessage("*squeak squeak*");
+        //             this.move(Mouse);
+        //     });
+
         this.add.image(180,310, 'Left Fire').setScale(0.50);
         this.add.image(1200,310, 'rightfire').setScale(0.50);
 
@@ -348,13 +348,13 @@ class ThirdRoom extends AdventureScene {
                 this.gotoScene('Capture');
             });
 
-        // let Mouse = this.add.image(320,610, 'Mouse').setScale(0.06);
-        // Mouse.setInteractive()
-        //     .on('pointerover', () => this.showMessage("*squeak*"))
-        //     .on('pointerdown', () => {
-        //         this.showMessage("*squeak squeak*");
-        //             this.move(Mouse);
-        //     });
+        let Mouse = this.add.image(320,610, 'Mouse').setScale(0.06);
+        Mouse.setInteractive()
+            .on('pointerover', () => this.showMessage("*squeak*"))
+            .on('pointerdown', () => {
+                this.showMessage("*squeak squeak*");
+                    this.move(Mouse);
+            });
 
         let Flowera = this.add.image(800,380, 'Flower').setScale(0.30);
         Flowera.setInteractive()
@@ -515,8 +515,8 @@ const game = new Phaser.Game({
         width: 1920,
         height: 1080
     },
-    //scene: [Capture, Cover],
-    scene: [Cover, Intro, Entrance, FirstRoom, SecondRoom, ThirdRoom, Freedom, Capture],
+    scene: [ThirdRoom],
+    //scene: [Cover, Intro, Entrance, FirstRoom, SecondRoom, ThirdRoom, Freedom, Capture],
     title: "Adventure Game",
 });
 
