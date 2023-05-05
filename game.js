@@ -450,8 +450,7 @@ const game = new Phaser.Game({
         width: 1920,
         height: 1080
     },
-    scene: [Freedom],
-    //scene: [Cover, Intro, Entrance, FirstRoom, SecondRoom, ThirdRoom, Freedom, Capture, Missionfailed],
+    scene: [Cover, Intro, Entrance, FirstRoom, SecondRoom, ThirdRoom, Freedom, Capture, Missionfailed],
     title: "Adventure Game",
 });
 
