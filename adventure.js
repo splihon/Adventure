@@ -167,20 +167,24 @@ class AdventureScene extends Phaser.Scene {
 //possible additional third command
 //this.add.image(320,210, 'ThirdRoom').setOrigin(0.30,0.20).setScale(0.83);
 
-    move(item){
-        this.tweens.add({
-            targets: item,
-            x: 10,
-            y: 1000,
-            duration: 500,
-            onComplete: () => {
-                item.setVisible(false);
-            }
+    // move(item){
+    //     this.tweens.add({
+    //         targets: item,
+    //         x: 10,
+    //         y: 1000,
+    //         duration: 500,
+    //         onComplete: () => {
+    //             item.setVisible(false);
+    //         }
             
+    //     });
+    setDraggable(item){
+        this.input.on('drag', (pointer, image, dragX, dragY) =>{
+            image.x = dragX;
+            image.y = dragY;
         });
-
-    
     }
+    
     onEnter() {
         console.warn('This AdventureScene did not implement onEnter():', this.constructor.name);
     }
