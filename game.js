@@ -337,7 +337,8 @@ class ThirdRoom extends AdventureScene {
     }
 //fix: door, fires, mouse movement
     onEnter() {
-        const background = this.add.image(320,210, 'ThirdRoom').setOrigin(0.30,0.20).setScale(0.83);
+        //const background = 
+        this.add.image(320,210, 'ThirdRoom').setOrigin(0.30,0.20).setScale(0.83);
        // background.setOrigin(0.30,0.20)
         //const bgWidth = background.displayWidth
         //const bgHeight = background.displayHeight
@@ -351,9 +352,7 @@ class ThirdRoom extends AdventureScene {
         //             this.move(Mouse);
         //     });
 
-        this.add.image(180,310, 'Left Fire').setScale(0.50);
-        this.add.image(1200,310, 'rightfire').setScale(0.50);
-
+       
         this.add.text(this.w * 0.2, this.w * 0.5, "Go back")
           .setFontSize(this.s * 2)
             .setInteractive()
@@ -388,15 +387,24 @@ class ThirdRoom extends AdventureScene {
                     this.collecting(Flowerb);
                 });
 
-        // this.add.image(320,210, 'Mouse').setScale(0.10);
-        // Mouse.setInteractive()
-        //     .on('pointerover', () => this.showMessage("*squeak*"))
-        //     .on('pointerdown', () => {
-        //         this.showMessage("*squeak squeak*");
-        //         //this.tweens.move({});
-        //     })
 
-        this.add.image(620,250, 'Door').setScale(0.50);
+        let LeftFire = this.add.image(180,310, 'Left Fire').setScale(0.50);
+        LeftFire.setInteractive()
+            .on('pointerover', () => this.showMessage("Torch, Embeded in the wall."))
+            .on('pointerdown', () => {
+                this.showMessage("Hot! No touching!");
+                    this.notouching(LeftFire);
+                });
+
+        let rightfire = this.add.image(1200,310, 'rightfire').setScale(0.50);
+        rightfire.setInteractive()
+            .on('pointerover', () => this.showMessage("Torch, Embeded in the wall."))
+            .on('pointerdown', () => {
+                this.showMessage("Hot! No touching!");
+                    this.notouching(rightfire);
+                });
+
+        let Door = this.add.image(620,250, 'Door').setScale(0.50);
         Door.setInteractive()
             .on('pointerover', () => {
                 if (this.hasItem("Key")) {
@@ -410,57 +418,10 @@ class ThirdRoom extends AdventureScene {
                     this.loseItem("Key");
                     this.showMessage("*squeak*");
                     Door.setText("unlocked door");
-                    this.gotoScene('Freedom');
+                        this.gotoScene('Freedom');
                 }
             })
-        
-        //let RightFire = this.text(this.w * 0.3, this.w * 0.3, "Right Fire")
-          //  .setFontSize(this.s * 2)
-          //let rightfire = this.add.image(320,210, 'rightfire').setScale(0.50);
-          //this.add.image(100,210, 'rightfire').setScale(0.50);
-          rightfire.setInteractive()
-            .on('pointerover', () => this.showMessage("Torch, Embeded in the wall."))
-            .on('pointerdown', () => {
-                this.showMessage("Hot! No touching!");
-                    this.notouching(rightfire);
-                });
     
-        //let LeftFire = this.text(this.w * 0.3, this.w * 0.3, "Left Fire")
-        let LeftFire = this.add.image(180,310, 'Left Fire').setScale(0.50);
-        LeftFire.setInteractive()
-            .on('pointerover', () => this.showMessage("Torch, Embeded in the wall."))
-            .on('pointerdown', () => {
-                this.showMessage("Hot! No touching!");
-                    this.notouching(LeftFire);
-                });
-
-        // //let Flower = this.add.image(this.w * 0.3, this.w * 0.3, "Flower")
-        //   //  .setFontSize(this.s * 2)
-        // let Flower = this.add.image(720,210, 'Flower').setScale(0.90);
-        // Flower.setInteractive()
-        //     .on('pointerover', () => this.showMessage("Flower, smells nice."))
-        //     .on('pointerdown', () => {
-        //         this.showMessage("You picked up a flower.");
-        //         this.gainItem('Flower');
-        //         this.tweens.add({
-        //             targets: Flower,
-        //             y: `-=${2 * this.s}`,
-        //             alpha: { from: 1, to: 0 },
-        //             duration: 500,
-        //            onComplete: () => Flower.destroy()
-        //         })
-        //     })
-
-        // //let Mouse = this.add.image
-        // let Mouse = this.add.image(420,610, 'Mouse').setScale(0.001);
-        // Mouse.setInteractive()
-        //     .on('pointerover', () => {
-        //         this.showMessage("*squeak*");
-        //     })
-        //     .on('pointerdown', () => {
-        //         this.showMessage("*squeak squeak*");
-        //         //this.tweens.move({});
-        //     })
 
         //let door = this.add.text(this.w * 0.1, this.w * 0.15, "locked door")
         //let Door = this.add.image(320,210, 'Door').setScale(0.50);
@@ -525,8 +486,8 @@ const game = new Phaser.Game({
         width: 1920,
         height: 1080
     },
-    //scene: [ThirdRoom],
-    scene: [Cover, Intro, Entrance, FirstRoom, SecondRoom, ThirdRoom, Freedom, Capture],
+    scene: [SecondRoom, ThirdRoom, Freedom],
+    //scene: [Cover, Intro, Entrance, FirstRoom, SecondRoom, ThirdRoom, Freedom, Capture],
     title: "Adventure Game",
 });
 
