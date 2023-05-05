@@ -417,7 +417,7 @@ class ThirdRoom extends AdventureScene {
                 if (this.hasItem("Key")) {
                     this.loseItem("Key");
                     this.showMessage("*squeak*");
-                    Door.setText("unlocked door");
+                    //Door.showMessage("unlocked door");
                         this.gotoScene('Freedom');
                 }
             })
