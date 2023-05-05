@@ -140,10 +140,11 @@ class Entrance extends AdventureScene {
 //Need to fix so that can collect item while not switching to next scene
 //Q: does this need to go after onEnter, or maybe put onEnter above create?? 
 //F: if starts to work check on how long the delay is,and if it is sufficent time   
-        this.input.on('pointerdown', () => {
-            this.cameras.main.fade(1000, 0,0,0);
-            this.time.delayedCall(1000, () => this.scene.start("First Room"));
-        });
+        
+        //this.input.on('pointerdown', () => {
+        //    this.cameras.main.fade(1000, 0,0,0);
+        //    this.time.delayedCall(1000, () => this.scene.start("First Room"));
+        //});
    // }
 //Q: thought maybe images are not showing up with it as this.add.text so changed to image but still not loading??
     //onEnter(){
@@ -160,40 +161,56 @@ class Entrance extends AdventureScene {
                 this.gotoScene('First Room');
             });
         //let Rock = this.add.image(this.w * 0.3, this.w * 0.3, "Rock")
-        let Rock = this.add.image(320, 210, 'Rock').setScale(0.50);
+       // let Rocka = this.add.image(320, 210, 'Rock').setScale(0.50);
             //.setFontSize(this.s * 2)
-        Rock.setInteractive()
+        Rocka.setInteractive()
 //possibly change so the rock moves and does not collect as on of the additions
             .on('pointerover', () => this.showMessage("Stone, heavy."))
             .on('pointerdown', () => {
                 this.showMessage("You picked up a rock.");
                 this.gainItem('Rock');
                 this.tweens.add({
-                    targets: Rock,
+                    targets: Rocka,
                     y: `-=${2 * this.s}`,
                     alpha: { from: 1, to: 0 },
                     duration: 500,
-                   onComplete: () => Rock.destroy()
+                   onComplete: () => Rocka.destroy()
+                }
+                )});
+
+        Rockb.setInteractive()
+//possibly change so the rock moves and does not collect as on of the additions
+            .on('pointerover', () => this.showMessage("Stone, heavy."))
+            .on('pointerdown', () => {
+                this.showMessage("You picked up a rock.");
+                this.gainItem('Rock');
+                this.tweens.add({
+                    targets: Rockb,
+                    y: `-=${2 * this.s}`,
+                    alpha: { from: 1, to: 0 },
+                    duration: 500,
+                   onComplete: () => Rockb.destroy()
                 }
                 )});
         //let Flower = this.add.image(this.w * 0.3, this.w * 0.3, "Flower")
-        let Flower = this.add.image(320,210, 'Flower').setScale(0.50);
+        //let Flower = this.add.image(320,210, 'Flower').setScale(0.50);
             //.setFontSize(this.s * 2)
-        Flower.setInteractive()
+    // one out of two to item to adventure (this."action"(item);)
+        Flowera.setInteractive()
             .on('pointerover', () => this.showMessage("Flower, smells nice."))
             .on('pointerdown', () => {
                 this.showMessage("You picked up a flower.");
                 this.gainItem('Flower');
-                this.tweens.add({
-                    targets: Flower,
+                /*this.tweens.add({
+                    targets: Flowera,
                     y: `-=${2 * this.s}`,
                     alpha: { from: 1, to: 0 },
                     duration: 500,
-                    onComplete: () => Flower.destroy()
+                    onComplete: () => Flowera.destroy()*/
+                    this.touching(Flowera);
                 })
-            })
+            }
     }
-}
 
 class FirstRoom extends AdventureScene {
     constructor() {
@@ -204,13 +221,30 @@ class FirstRoom extends AdventureScene {
         this.load.image('FirstRoom','FirstRoom.png');
         this.load.image('File','File.png');
         this.load.image("Rock","Rock.png");
-        this.load.image("Right Fire", "Right Fire.png")
+        this.load.image("rightfire", "rightfire.png")
     }
 //so confused, only one file shows up while two torchs and rocks showed up when unoted below, but none show message????
     onEnter(){
     //create(){
         this.add.image(320,210, 'FirstRoom').setOrigin(0.30,0.20).setScale(0.83);
-        this.add.image(750,710, 'File').setScale(0.20);
+        let File = this.add.image(150,710, 'File').setScale(0.20)
+            .setInteractive()
+            .on('pointerover', () => {
+            this.showMessage("Found it!")
+        })
+        .on('pointerdown', () => {
+            this.showMessage("You picked up confidencial documents.");
+            this.gainItem('File');
+    //                this.tweens.add({
+    //                    targets: File,
+    //                    y: `-=${2 * this.s}`,
+    //                    alpha: { from: 1, to: 0 },
+    //                    duration: 500,
+    // //idea on what one of the things i change or add to other page is .move for rocks or .shake for flower bundles?(if even am understanding that part correctly )
+    //                   onComplete: () => File.destroy()
+    //                })
+                this.touching(File);
+            });
         //I am possibly defining the 'Rock' variable twice,maybe?
         //let Rock = 
         //this.add.image(320,210, 'Rock').setScale(0.50);
@@ -240,6 +274,9 @@ class FirstRoom extends AdventureScene {
 
 //currently set to collect rock, should I only move it off??
         //let Rock = this.add.text(this.w * 0.3, this.w * 0.3, "Rock")
+    //   
+    
+    
         let Rock = this.add.image(750,630, 'Rock').setScale(0.50);
         //.setFontSize(this.s * 2)
         Rock.setInteractive()
@@ -257,15 +294,13 @@ class FirstRoom extends AdventureScene {
     })
 ///????
         //let RightFire = 
-        let RightFire = this.add.image(800,550, 'Right Fire').setScale(0.50);
-        //this.text(this.w * 0.3, this.w * 0.3, "Right Fire")
-            //.setFontSize(this.s * 2)
-        RightFire.setInteractive()
-            .on('pointerover', ("Torch, Embeded in the wall."))
+        let rightfire = this.add.image(800,550, 'rightfire').setScale(0.50)
+            .setInteractive()
+            .on('pointerover', () => this.showMessage("Torch, Embeded in the wall."))
             .on('pointerdown', () => {
                 this.showMessage("Hot! No touching!");
                 this.tweens.add({
-                    targets: RightFire,
+                    targets: rightfire,
                     x: '+=' + this.s,
                     repeat: 2,
                    yoyo: true,
@@ -275,24 +310,25 @@ class FirstRoom extends AdventureScene {
 //check spacing for how let .. should be aligning compared to onEnter and other 
 //this file does not connect with loaded image??               
         //let File = this.add.text(this.w * 0.5, this.w * 0.1, "File")
-        let File = this.add.image(320,210, 'File').setScale(0.50);
-        //.setFontSize(this.s * 2)
-        File.setInteractive()
-            .on('pointerover', () => {
-            this.showMessage("Found it!")
-          })
-           .on('pointerdown', () => {
-               this.showMessage("You picked up confidencial documents.");
-               this.gainItem('File');
-               this.tweens.add({
-                   targets: File,
-                   y: `-=${2 * this.s}`,
-                   alpha: { from: 1, to: 0 },
-                   duration: 500,
-//idea on what one of the things i change or add to other page is .move for rocks or .shake for flower bundles?(if even am understanding that part correctly )
-                  onComplete: () => File.destroy()
-               }
-               )});
+//         let File = this.add.image(750,710, 'File').setScale(0.20);
+//         //.setFontSize(this.s * 2)
+//         File.setInteractive()
+//             .on('pointerover', () => {
+//             this.showMessage("Found it!")
+//           })
+//            .on('pointerdown', () => {
+//                this.showMessage("You picked up confidencial documents.");
+//                this.gainItem('File');
+// //                this.tweens.add({
+// //                    targets: File,
+// //                    y: `-=${2 * this.s}`,
+// //                    alpha: { from: 1, to: 0 },
+// //                    duration: 500,
+// // //idea on what one of the things i change or add to other page is .move for rocks or .shake for flower bundles?(if even am understanding that part correctly )
+// //                   onComplete: () => File.destroy()
+// //                })
+//                 this.touching(File);
+//                });
            }
 
 }
@@ -359,7 +395,9 @@ class SecondRoom extends AdventureScene {
         this.add.image(40,550, 'Left Fire').setScale(0.40);
         //.setFontSize(this.s * 2)
         LeftFire.setInteractive()
-            .on('pointerover', ("Torch, Embeded in the wall."))
+            .on('pointerover', () => {
+                this.showMessage("Torch, Embeded in the wall.");
+            })
             .on('pointerdown', () => {
                 this.showMessage("Hot! No touching!");
                 this.tweens.add({
@@ -432,7 +470,9 @@ class ThirdRoom extends AdventureScene {
           //  .setFontSize(this.s * 2)
           let RightFire = this.add.image(320,210, 'Right Fire').setScale(0.50);
           RightFire.setInteractive()
-            .on('pointerover', ("Torch, Embeded in the wall."))
+            .on('pointerover', () => {
+                this.showMessage("Torch, Embeded in the wall.");
+            })
             .on('pointerdown', () => {
                 this.showMessage("Hot! No touching!");
                 this.tweens.add({
@@ -448,7 +488,9 @@ class ThirdRoom extends AdventureScene {
         let LeftFire = this.add.image(320,210, 'Left Fire').setScale(0.50);
         //.setFontSize(this.s * 2)
         LeftFire.setInteractive()
-            .on('pointerover', ("Torch, Embeded in the wall."))
+            .on('pointerover', () => {
+                this.showMessage("Torch, Embeded in the wall.");
+            })
             .on('pointerdown', () => {
                 this.showMessage("Hot! No touching!");
                 this.tweens.add({
