@@ -487,18 +487,58 @@ class ThirdRoom extends AdventureScene {
         this.load.image('Left Fire', 'Left Fire.png');
         this.load.image('Flower','Flower.png');
     }
+//fix: door, fires, mouse movement
     onEnter() {
-    //create(){
-        //let ThirdRoom = 
         this.add.image(320,210, 'ThirdRoom').setOrigin(0.30,0.20).setScale(0.83);
-        //ThirdRoom.depth = 1;
-        this.add.image(320,210, 'Left Fire').setScale(0.50);
-        // this.add.image(320,210, 'rightflower').setScale(0.50);
-        this.add.image(320,210, 'Flower').setScale(0.50);
-        this.add.image(320,210, 'Flower').setScale(0.50);
-        this.add.image(320,210, 'Mouse').setScale(0.30);
-        
-        this.add.image(320,210, 'Door').setScale(0.50);
+        this.add.image(180,310, 'Left Fire').setScale(0.50);
+        this.add.image(1200,310, 'rightfire').setScale(0.50);
+
+        let Mouse = this.add.image(320,610, 'Mouse').setScale(0.06);
+        Mouse.setInteractive()
+            .on('pointerover', () => this.showMessage("*squeak*"))
+            .on('pointerdown', () => {
+                this.showMessage("*squeak squeak*");
+                //this.tweens.move({});
+            })
+
+        let Flowera = this.add.image(800,380, 'Flower').setScale(0.30);
+        Flowera.setInteractive()
+            .on('pointerover', () => this.showMessage("Flower, smells nice."))
+            .on('pointerdown', () => {
+                this.showMessage("You picked up a flower.");
+                this.gainItem('Flower');
+                /*this.tweens.add({
+                    targets: Flowera,
+                    y: `-=${2 * this.s}`,
+                    alpha: { from: 1, to: 0 },
+                    duration: 500,
+                    onComplete: () => Flowera.destroy()*/
+                    this.collecting(Flowera);
+                })
+                
+        let Flowerb = this.add.image(430,380, 'Flower').setScale(0.30);
+        Flowerb.setInteractive()
+            .on('pointerover', () => this.showMessage("Flower, smells nice."))
+            .on('pointerdown', () => {
+                this.showMessage("You picked up a flower.");
+                this.gainItem('Flower');
+                    /*this.tweens.add({
+                        targets: Flowera,
+                        y: `-=${2 * this.s}`,
+                        alpha: { from: 1, to: 0 },
+                        duration: 500,
+                        onComplete: () => Flowera.destroy()*/
+                    this.collecting(Flowerb);
+                    })
+        // this.add.image(320,210, 'Mouse').setScale(0.10);
+        // Mouse.setInteractive()
+        //     .on('pointerover', () => this.showMessage("*squeak*"))
+        //     .on('pointerdown', () => {
+        //         this.showMessage("*squeak squeak*");
+        //         //this.tweens.move({});
+        //     })
+
+        this.add.image(620,250, 'Door').setScale(0.50);
         Door.setInteractive()
             .on('pointerover', () => {
                 if (this.hasItem("Key")) {
@@ -519,13 +559,21 @@ class ThirdRoom extends AdventureScene {
                     this.gotoScene('Capture');
                 }
             })
-    //}
+        
+        
+        // this.add.image(320,210, 'Mouse').setScale(0.10);
+        // Mouse.setInteractive()
+        //     .on('pointerover', () => this.showMessage("*squeak*"))
+        //     .on('pointerdown', () => {
+        //         this.showMessage("*squeak squeak*");
+        //         //this.tweens.move({});
+        //     })
 
     //onEnter() {
         //let RightFire = this.text(this.w * 0.3, this.w * 0.3, "Right Fire")
           //  .setFontSize(this.s * 2)
           //let rightfire = this.add.image(320,210, 'rightfire').setScale(0.50);
-          this.add.image(1200,210, 'rightfire').setScale(0.50);
+          //this.add.image(100,210, 'rightfire').setScale(0.50);
           rightfire.setInteractive()
             .on('pointerover', () => this.showMessage("Torch, Embeded in the wall."))
             .on('pointerdown', () => {
@@ -540,7 +588,7 @@ class ThirdRoom extends AdventureScene {
                 })
             })
         //let LeftFire = this.text(this.w * 0.3, this.w * 0.3, "Left Fire")
-        let LeftFire = this.add.image(320,210, 'Left Fire').setScale(0.50);
+        let LeftFire = this.add.image(180,310, 'Left Fire').setScale(0.50);
         LeftFire.setInteractive()
             .on('pointerover', () => this.showMessage("Torch, Embeded in the wall."))
             .on('pointerdown', () => {
@@ -555,33 +603,42 @@ class ThirdRoom extends AdventureScene {
                 })
             })
 
-        //let Flower = this.add.image(this.w * 0.3, this.w * 0.3, "Flower")
-          //  .setFontSize(this.s * 2)
-        let Flower = this.add.image(320,210, 'Flower').setScale(0.50);
-        Flower.setInteractive()
-            .on('pointerover', () => this.showMessage("Flower, smells nice."))
-            .on('pointerdown', () => {
-                this.showMessage("You picked up a flower.");
-                this.gainItem('Flower');
-                this.tweens.add({
-                    targets: Flower,
-                    y: `-=${2 * this.s}`,
-                    alpha: { from: 1, to: 0 },
-                    duration: 500,
-                   onComplete: () => Flower.destroy()
-                })
-            })
+        // //let Flower = this.add.image(this.w * 0.3, this.w * 0.3, "Flower")
+        //   //  .setFontSize(this.s * 2)
+        // let Flower = this.add.image(720,210, 'Flower').setScale(0.90);
+        // Flower.setInteractive()
+        //     .on('pointerover', () => this.showMessage("Flower, smells nice."))
+        //     .on('pointerdown', () => {
+        //         this.showMessage("You picked up a flower.");
+        //         this.gainItem('Flower');
+        //         this.tweens.add({
+        //             targets: Flower,
+        //             y: `-=${2 * this.s}`,
+        //             alpha: { from: 1, to: 0 },
+        //             duration: 500,
+        //            onComplete: () => Flower.destroy()
+        //         })
+        //     })
+        
 
-        //let Mouse = this.add.image
-        let Mouse = this.add.image(420,610, 'Mouse').setScale(0.001);
-        Mouse.setInteractive()
-            .on('pointerover', () => {
-                this.showMessage("*squeak*");
-            })
-            .on('pointerdown', () => {
-                this.showMessage("*squeak squeak*");
-                //this.tweens.move({});
-            })
+        // ThirdRoom.depth = 1;
+        // Door.depth = 2;
+        // Mouse.depth = 3;
+        // rightfire.depth = 3;
+        // LeftFire.depth = 3;
+        // Flower.depth = 3;
+
+
+        // //let Mouse = this.add.image
+        // let Mouse = this.add.image(420,610, 'Mouse').setScale(0.001);
+        // Mouse.setInteractive()
+        //     .on('pointerover', () => {
+        //         this.showMessage("*squeak*");
+        //     })
+        //     .on('pointerdown', () => {
+        //         this.showMessage("*squeak squeak*");
+        //         //this.tweens.move({});
+        //     })
 
         //let door = this.add.text(this.w * 0.1, this.w * 0.15, "locked door")
         //let Door = this.add.image(320,210, 'Door').setScale(0.50);
@@ -599,17 +656,16 @@ class Freedom extends Phaser.Scene {
     preload(){
         this.load.path = './assets/';
         this.load.image('Freedom','Freedom.png');
+        this.load.image("Left Fire", "Left Fire.png");
+        this.load.image("rightfire", "rightfire.png");
     }
     create() {
-        let freedom = this.add.image(320,210, 'Freedom').setScale(0.50);
-        let LeftFireb = this.add.image(320,210, 'Left Fire').setScale(0.50);
-        let RightFireb = this.add.image(320,210, 'Right Fire').setScale(0.50);
-        this.add.text(500, 500, "Mission Complete!").setFontSize(50);
-        this.add.text(500, 900, "Click anywhere to restart.").setFontSize(40);
-        //not working to load images???
-        freedom.depth = 1;
-        LeftFireb.depth = 2;
-        RightFireb.depth = 2;
+        this.add.image(320,210, 'Freedom').setOrigin(0.20,0.154).setScale(1.2);
+        this.add.image(320,310, 'Left Fire').setScale(0.50);
+        this.add.image(1700,310, 'rightfire').setScale(0.50);
+        this.add.text(650, 600, "Mission Complete!").setFontSize(70);
+        this.add.text(700, 900, "Click anywhere to restart.").setFontSize(40);
+    
 
         this.input.on('pointerdown', () => this.scene.start('Cover'));
         //this.input.on('pointerdown', () => {
@@ -625,24 +681,18 @@ class Capture extends Phaser.Scene {
     }
     preload(){
         this.load.path = './assets/';
-        this.load.image('Mission Failed','Mission Failed.png');
+        this.load.image('missionfailed2','missionfailed2.png');
+        this.load.image('Left Fire', 'Left Fire.png');
+        this.load.image('rightfire', 'rightfire.png');
     }
     create() {
-        let MissionFailed = this.add.image(320,210, 'Mission Failed').setScale(0.50);
-        let LeftFire = this.add.image(320,210, 'Left Fire').setScale(0.50);
-        this.add.image(320,210, 'Right Fire').setScale(0.50);
-        this.add.text(300, 500, "You have been captured by the enemy!").setFontSize(50);
-        this.add.text(500, 900, "Click anywhere to restart.").setFontSize(40);
-        
-        MissionFailed.depth = 1;
-        LeftFire =  2;
-
+        this.add.image(930,430, 'missionfailed2').setScale(0.90);
+        this.add.image(400,500, 'Left Fire').setScale(0.50);
+        this.add.image(1500,500, 'rightfire').setScale(0.50);
+        this.add.text(650,600, "You took too long!").setFontSize(50);
+        this.add.text(450, 690, "And are now captured by the enemy!").setFontSize(50);
+        this.add.text(700, 900, "Click anywhere to restart.").setFontSize(40);
         this.input.on('pointerdown', () => this.scene.start('Cover'));
-        
-        //this.input.on('pointerdown', () => {
-        //    this.cameras.main.fade(1000, 0,0,0);
-         //   this.time.delayedCall(1000, () => this.scene.start("Intro"));
-        //    });
     }
 }
 
@@ -654,7 +704,7 @@ const game = new Phaser.Game({
         width: 1920,
         height: 1080
     },
-    scene: [ThirdRoom],
+    scene: [Capture, Cover],
     //scene: [Cover, Intro, Entrance, FirstRoom, SecondRoom, ThirdRoom, Freedom, Capture],
     title: "Adventure Game",
 });
